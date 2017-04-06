@@ -14,6 +14,7 @@ void Animation::addFrame(AnimationFrame *f)
 void Animation::setID(const QString &i)
 {
     id=i;
+    this->setText(id);
 }
 
 QString Animation::getID()

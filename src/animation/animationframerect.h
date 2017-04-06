@@ -8,6 +8,8 @@ class AnimationFrameRect:public QStandardItem
 {
 public:
     AnimationFrameRect();
+    AnimationFrameRect *clone() const;
+
     void setX(int x);
     void setY(int y);
     void setWidth(int w);
@@ -16,6 +18,9 @@ public:
     int getY();
     int getWidth();
     int getHeight();
+    void setRect(QRect r);
+
+    void updateText();
 protected:
     QRect rect;
 };

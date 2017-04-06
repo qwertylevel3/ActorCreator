@@ -2,7 +2,6 @@
 
 AnimationBox::AnimationBox()
 {
-
 }
 
 bool AnimationBox::init(const QString &fileName)
@@ -15,6 +14,7 @@ bool AnimationBox::init(const QString &fileName)
         std::cerr<<fileName.toStdString()<<" can not open"<<std::endl;
         return false;
     }
+    this->setText(fileName);
 
     QDomDocument doc;
     QString errorStr;

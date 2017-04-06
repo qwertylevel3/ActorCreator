@@ -24,7 +24,7 @@ private:
     void printAnimationBox();
 
     Ui::MainWindow *ui;
-    std::shared_ptr<AnimationBox> animationBox;
+    AnimationBox* animationBox;
 };
 
 #endif // MAINWINDOW_H

@@ -12,6 +12,7 @@ public:
     {
         ATKRECT,BODYRECT,PHYRECT
     };
+    AnimationFrame *clone() const;
 
     AnimationFrame();
     void addAtkRect(AnimationFrameRect* rect);

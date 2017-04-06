@@ -18,21 +18,21 @@ PRECOMPILED_HEADER = src/stable.h
 
 SOURCES +=\
     src/main.cpp \
-    src/mainwindow.cpp \
     src/animation/animation.cpp \
     src/animation/animationbox.cpp \
     src/animation/animationframe.cpp \
-    src/animation/animationframerect.cpp
+    src/animation/animationframerect.cpp \
+    src/mainwindow.cpp
 
 HEADERS  +=\
     src/stable.h \
-    src/mainwindow.h \
     src/animation/animation.h \
     src/animation/animationbox.h \
     src/animation/animationframe.h \
-    src/animation/animationframerect.h
+    src/animation/animationframerect.h \
+    src/mainwindow.h
 
-FORMS    +=\
+FORMS    += \
     src/mainwindow.ui
 
 

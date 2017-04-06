@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
 
-    animationBox=std::make_shared<AnimationBox>();
+    animationBox=new AnimationBox();
 }
 
 MainWindow::~MainWindow()
@@ -31,6 +31,11 @@ void MainWindow::openFile()
                     && animationBox->init(fileName))
     {
         printAnimationBox();
+
+        QStandardItemModel* model=new QStandardItemModel(this);
+        model->appendRow(animationBox);
+
+        ui->atkRectView->setModel(model);
     }
 }
 
