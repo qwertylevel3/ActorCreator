@@ -2,12 +2,19 @@
 #define ANIMATION_H
 
 
+#include"stable.h"
+
 #include"animationframe.h"
 
-struct Animation
+
+class Animation:public QStandardItem
 {
-    void addFrame(AnimationFrame f);
-    QList<AnimationFrame> frameList;
+public:
+    Animation();
+    void addFrame(AnimationFrame* f);
+    void setID(const QString& i);
+    QString getID();
+protected:
     QString id;
 };
 

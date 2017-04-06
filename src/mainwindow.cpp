@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(openFile()));
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
+
+    animationBox=std::make_shared<AnimationBox>();
 }
 
 MainWindow::~MainWindow()
@@ -26,9 +28,9 @@ void MainWindow::openFile()
                                                   tr("animation file(*.xml)"));
 
     if(!fileName.isEmpty()
-                    && animationBox.init(fileName))
+                    && animationBox->init(fileName))
     {
-
+        printAnimationBox();
     }
 }
 
@@ -44,16 +46,17 @@ void MainWindow::saveFile()
 
 void MainWindow::printAnimationBox()
 {
-    QList<Animation> allAnimation=animationBox.getAllAnimationRef();
-
-    for(int i=0;i<allAnimation.size();i++)
+    for(int i=0;i<animationBox->rowCount();i++)
     {
-        Animation a=allAnimation.at(i);
-        std::cout<<a.id.toStdString()<<std::endl;
+        Animation* animation=static_cast<Animation*>(animationBox->child(i));
 
-        for(int j=0;j<a.frameList.size();j++)
+        std::cout<<animation->getID().toStdString()<<std::endl;
+
+        for(int i=0;i<animation->rowCount();i++)
         {
-            std::cout<<a.frameList.at(j).sprite.toStdString()<<std::endl;
+            AnimationFrame* frame=static_cast<AnimationFrame*>(animation->child(i));
+
+            std::cout<<frame->getSprite().toStdString()<<std::endl;
         }
     }
 }

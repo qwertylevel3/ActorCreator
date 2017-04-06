@@ -39,62 +39,66 @@ bool AnimationBox::init(const QString &fileName)
     return true;
 }
 
-QList<Animation> &AnimationBox::getAllAnimationRef()
-{
-    return allAnimation;
-}
 
 void AnimationBox::clear()
 {
-    allAnimation.clear();
+    int count=this->rowCount();
+    for(int i=0;i<count;i++)
+    {
+        this->removeRow(0);
+    }
+}
+
+void AnimationBox::addAnimation(Animation *a)
+{
+    this->appendRow(a);
 }
 
 bool AnimationBox::readAnimation(QDomElement& node)
 {
-    Animation animation;
+    Animation* animation=new Animation();
 
     //ID
     QDomElement idElement=node.firstChildElement();
-    animation.id=idElement.text();
+    animation->setID(idElement.text());
 
     QDomElement frameElement=idElement.nextSiblingElement();
 
     while(!frameElement.isNull())
     {
         //frame
-        AnimationFrame frame;
+        AnimationFrame* frame=new AnimationFrame;
         initAnimationFrame(frame,frameElement);
-        animation.addFrame(frame);
+        animation->addFrame(frame);
 
         frameElement=frameElement.nextSiblingElement();
     }
 
-    allAnimation.push_back(animation);
+    this->addAnimation(animation);
 
     return true;
 }
 
-void AnimationBox::initAnimationFrame(AnimationFrame &frame,QDomElement& element)
+void AnimationBox::initAnimationFrame(AnimationFrame* frame,QDomElement& element)
 {
     //sprite
     QDomElement attrElement=element.firstChildElement();
     QString spriteFrame=attrElement.text();
-    frame.sprite=spriteFrame;
+    frame->setSprite(spriteFrame);
 
     //delayUnits
     attrElement=attrElement.nextSiblingElement();
     float delayUnits=attrElement.text().toFloat();
-    frame.delayUnits=delayUnits;
+    frame->setDelayUnits(delayUnits);
 
     //atkRect
     attrElement=attrElement.nextSiblingElement();
     QDomElement rectElement=attrElement.firstChildElement();
     while(!rectElement.isNull())
     {
-        QRect rect;
+        AnimationFrameRect* rect=new AnimationFrameRect();
         readRect(rect,rectElement);
-        frame.addAtkRect(rect);
-
+        frame->addAtkRect(rect);
         rectElement=rectElement.nextSiblingElement();
     }
 
@@ -103,9 +107,9 @@ void AnimationBox::initAnimationFrame(AnimationFrame &frame,QDomElement& element
     rectElement=attrElement.firstChildElement();
     while(!rectElement.isNull())
     {
-        QRect rect;
+        AnimationFrameRect* rect=new AnimationFrameRect();
         readRect(rect,rectElement);
-        frame.addAtkRect(rect);
+        frame->addBodyRect(rect);
         rectElement=rectElement.nextSiblingElement();
     }
 
@@ -114,29 +118,29 @@ void AnimationBox::initAnimationFrame(AnimationFrame &frame,QDomElement& element
     rectElement=attrElement.firstChildElement();
     while(!rectElement.isNull())
     {
-        QRect rect;
+        AnimationFrameRect* rect=new AnimationFrameRect();
         readRect(rect,rectElement);
-        frame.addAtkRect(rect);
+        frame->addPhyRect(rect);
         rectElement=rectElement.nextSiblingElement();
     }
 }
 
-void AnimationBox::readRect(QRect &rect,QDomElement& element)
+void AnimationBox::readRect(AnimationFrameRect* rect,QDomElement& element)
 {
     //x
     QDomElement attrElement=element.firstChildElement();
-    rect.setX(attrElement.text().toInt());
+    rect->setX(attrElement.text().toInt());
 
     //y
     attrElement=attrElement.nextSiblingElement();
-    rect.setY(attrElement.text().toInt());
+    rect->setY(attrElement.text().toInt());
 
     //w
     attrElement=attrElement.nextSiblingElement();
-    rect.setWidth(attrElement.text().toInt());
+    rect->setWidth(attrElement.text().toInt());
 
     //h
     attrElement=attrElement.nextSiblingElement();
-    rect.setHeight(attrElement.text().toInt());
+    rect->setHeight(attrElement.text().toInt());
 
 }

@@ -3,16 +3,27 @@
 
 #include"stable.h"
 
-struct AnimationFrame
+#include"animationframerect.h"
+
+class AnimationFrame:public QStandardItem
 {
-    void addAtkRect(QRect rect);
-    void addBodyRect(QRect rect);
-    void addPhyRect(QRect rect);
+public:
+    enum RectType
+    {
+        ATKRECT,BODYRECT,PHYRECT
+    };
+
+    AnimationFrame();
+    void addAtkRect(AnimationFrameRect* rect);
+    void addBodyRect(AnimationFrameRect* rect);
+    void addPhyRect(AnimationFrameRect* rect);
+    void setSprite(const QString& s);
+    void setDelayUnits(float d);
+    QString getSprite();
+    float getDelayUnits();
+protected:
     QString sprite;
     float delayUnits;
-    QList<QRect> atkRectBox;
-    QList<QRect> bodyRectBox;
-    QList<QRect> phyRectBox;
 };
 
 #endif // ANIMATIONFRAME_H

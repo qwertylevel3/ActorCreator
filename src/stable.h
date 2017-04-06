@@ -9,13 +9,11 @@
 #include<QString>
 #include<QList>
 #include<QRect>
-
-
-
-
+#include<QStandardItem>
 
 
 
 #include<iostream>
+#include<memory>
 
 #endif // STABLE_H

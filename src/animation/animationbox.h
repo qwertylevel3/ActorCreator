@@ -4,18 +4,17 @@
 #include"animation.h"
 #include"stable.h"
 
-class AnimationBox
+class AnimationBox:public QStandardItem
 {
 public:
     AnimationBox();
     bool init(const QString& fileName);
-    QList<Animation> &getAllAnimationRef();
     void clear();
+    void addAnimation(Animation* a);
 protected:
     bool readAnimation(QDomElement& node);
-    void initAnimationFrame(AnimationFrame &frame,QDomElement& element);
-    void readRect(QRect &rect,QDomElement& element);
-    QList<Animation> allAnimation;
+    void initAnimationFrame(AnimationFrame* frame,QDomElement& element);
+    void readRect(AnimationFrameRect* rect,QDomElement& element);
 };
 
 #endif // ANIMATIONBOX_H

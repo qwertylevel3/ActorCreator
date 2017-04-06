@@ -1,17 +1,45 @@
 #include "animationframe.h"
 
-void AnimationFrame::addAtkRect(QRect rect)
+AnimationFrame::AnimationFrame()
 {
-    atkRectBox.push_back(rect);
+//    this->setRowCount(3);
+    this->appendRow(new AnimationFrameRect);
+    this->appendRow(new AnimationFrameRect);
+    this->appendRow(new AnimationFrameRect);
 }
 
-void AnimationFrame::addBodyRect(QRect rect)
+void AnimationFrame::addAtkRect(AnimationFrameRect* rect)
 {
-    bodyRectBox.push_back(rect);
+    this->child(ATKRECT)->appendRow(rect);
 }
 
-void AnimationFrame::addPhyRect(QRect rect)
+void AnimationFrame::addBodyRect(AnimationFrameRect* rect)
 {
-    phyRectBox.push_back(rect);
+    this->child(BODYRECT)->appendRow(rect);
+}
+
+void AnimationFrame::addPhyRect(AnimationFrameRect *rect)
+{
+    this->child(PHYRECT)->appendRow(rect);
+}
+
+void AnimationFrame::setSprite(const QString &s)
+{
+    sprite=s;
+}
+
+void AnimationFrame::setDelayUnits(float d)
+{
+    delayUnits=d;
+}
+
+QString AnimationFrame::getSprite()
+{
+    return sprite;
+}
+
+float AnimationFrame::getDelayUnits()
+{
+    return delayUnits;
 }
 
