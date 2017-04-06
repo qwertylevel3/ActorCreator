@@ -13,12 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
 
-    animationBox=new AnimationBox();
+    animationBox=new AnimationBox;
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete model;
 }
 
 void MainWindow::openFile()
@@ -30,12 +31,35 @@ void MainWindow::openFile()
     if(!fileName.isEmpty()
                     && animationBox->init(fileName))
     {
-        printAnimationBox();
+//        printAnimationBox();
 
-        QStandardItemModel* model=new QStandardItemModel(this);
+        if(model)
+        {
+            model->clear();
+        }
+        model=new QStandardItemModel(this);
         model->appendRow(animationBox);
 
         ui->atkRectView->setModel(model);
+        ui->bodyRectView->setModel(model);
+        ui->phyRectView->setModel(model);
+        ui->frameView->setModel(model);
+        ui->animationView->setModel(model);
+
+        curAnimationIndex=animationBox->child(0)->index();
+        curFrameIndex=animationBox->child(0)->child(0)->index();
+
+        QModelIndex atkRootIndex=curFrameIndex.child(0,0);
+        QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
+        QModelIndex phyRootIndex=curFrameIndex.child(2,0);
+
+
+        ui->atkRectView->setRootIndex(atkRootIndex);
+        ui->bodyRectView->setRootIndex(bodyRootIndex);
+        ui->phyRectView->setRootIndex(phyRootIndex);
+
+        ui->animationView->setRootIndex(animationBox->index());
+        ui->frameView->setRootIndex(curAnimationIndex);
     }
 }
 

@@ -25,6 +25,9 @@ private:
 
     Ui::MainWindow *ui;
     AnimationBox* animationBox;
+    QModelIndex curAnimationIndex;
+    QModelIndex curFrameIndex;
+    QStandardItemModel* model{nullptr};
 };
 
 #endif // MAINWINDOW_H
