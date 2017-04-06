@@ -1,9 +1,7 @@
 #ifndef ANIMATIONFRAME_H
 #define ANIMATIONFRAME_H
 
-#include<QString>
-#include<QList>
-#include<QRect>
+#include"stable.h"
 
 struct AnimationFrame
 {

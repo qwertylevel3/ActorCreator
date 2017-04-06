@@ -1,0 +1,13 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\animation.o
+./release\animationframe.o
+./release\animationbox.o
+./release\main.o
+./release\mainwindow.o
+./release\animation.o
+./release\animationbox.o
+./release\animationframe.o
+./release\moc_mainwindow.o
+);

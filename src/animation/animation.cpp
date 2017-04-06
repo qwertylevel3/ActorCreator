@@ -1,5 +1,4 @@
 #include "animation.h"
-#include<QXmlStreamReader>
 
 
 void Animation::addFrame(AnimationFrame f)

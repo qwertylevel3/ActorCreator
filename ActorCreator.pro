@@ -12,16 +12,29 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ActorCreator
 TEMPLATE = app
 
+PRECOMPILED_HEADER = src/stable.h
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    animation.cpp \
-    animationframe.cpp \
-    animationbox.cpp
 
-HEADERS  += mainwindow.h \
-    animation.h \
-    animationframe.h \
-    animationbox.h
 
-FORMS    += mainwindow.ui
+SOURCES +=\
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/animation/animation.cpp \
+    src/animation/animationbox.cpp \
+    src/animation/animationframe.cpp
+
+HEADERS  +=\
+    src/stable.h \
+    src/mainwindow.h \
+    src/animation/animation.h \
+    src/animation/animationbox.h \
+    src/animation/animationframe.h
+
+FORMS    +=\
+    src/mainwindow.ui
+
+
+INCLUDEPATH += $$PWD\src\
+INCLUDEPATH += $$PWD\src\animation\
+INCLUDEPATH += $$PWD\resource\
+

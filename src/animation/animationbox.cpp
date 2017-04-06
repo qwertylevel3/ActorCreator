@@ -1,6 +1,4 @@
 #include "animationbox.h"
-#include<QFile>
-#include<iostream>
 
 AnimationBox::AnimationBox()
 {
@@ -9,6 +7,8 @@ AnimationBox::AnimationBox()
 
 bool AnimationBox::init(const QString &fileName)
 {
+    clear();
+
     QFile file(fileName);
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -42,6 +42,11 @@ bool AnimationBox::init(const QString &fileName)
 QList<Animation> &AnimationBox::getAllAnimationRef()
 {
     return allAnimation;
+}
+
+void AnimationBox::clear()
+{
+    allAnimation.clear();
 }
 
 bool AnimationBox::readAnimation(QDomElement& node)
