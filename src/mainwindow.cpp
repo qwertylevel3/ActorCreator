@@ -13,7 +13,18 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
 
+    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeAnimation()));
+    connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
+
     animationBox=new AnimationBox;
+    model=new QStandardItemModel();
+    model->appendRow(animationBox);
+
+    ui->atkRectView->setModel(model);
+    ui->bodyRectView->setModel(model);
+    ui->phyRectView->setModel(model);
+    ui->frameView->setModel(model);
+    ui->animationView->setModel(model);
 }
 
 MainWindow::~MainWindow()
@@ -33,33 +44,10 @@ void MainWindow::openFile()
     {
 //        printAnimationBox();
 
-        if(model)
-        {
-            model->clear();
-        }
-        model=new QStandardItemModel(this);
-        model->appendRow(animationBox);
-
-        ui->atkRectView->setModel(model);
-        ui->bodyRectView->setModel(model);
-        ui->phyRectView->setModel(model);
-        ui->frameView->setModel(model);
-        ui->animationView->setModel(model);
-
         curAnimationIndex=animationBox->child(0)->index();
-        curFrameIndex=animationBox->child(0)->child(0)->index();
-
-        QModelIndex atkRootIndex=curFrameIndex.child(0,0);
-        QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
-        QModelIndex phyRootIndex=curFrameIndex.child(2,0);
-
-
-        ui->atkRectView->setRootIndex(atkRootIndex);
-        ui->bodyRectView->setRootIndex(bodyRootIndex);
-        ui->phyRectView->setRootIndex(phyRootIndex);
-
         ui->animationView->setRootIndex(animationBox->index());
-        ui->frameView->setRootIndex(curAnimationIndex);
+        ui->animationView->setCurrentIndex(curAnimationIndex);
+        changeAnimation();
     }
 }
 
@@ -71,6 +59,30 @@ void MainWindow::newFile()
 void MainWindow::saveFile()
 {
     std::cout<<"save"<<std::endl;
+}
+
+void MainWindow::changeFrame()
+{
+    curFrameIndex=ui->frameView->currentIndex();
+
+    QModelIndex atkRootIndex=curFrameIndex.child(0,0);
+    QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
+    QModelIndex phyRootIndex=curFrameIndex.child(2,0);
+
+    ui->atkRectView->setRootIndex(atkRootIndex);
+    ui->bodyRectView->setRootIndex(bodyRootIndex);
+    ui->phyRectView->setRootIndex(phyRootIndex);
+}
+
+void MainWindow::changeAnimation()
+{
+    curAnimationIndex=ui->animationView->currentIndex();
+    curFrameIndex=curAnimationIndex.child(0,0);
+
+    ui->frameView->setRootIndex(curAnimationIndex);
+    ui->frameView->setCurrentIndex(curAnimationIndex.child(0,0));
+
+    changeFrame();
 }
 
 void MainWindow::printAnimationBox()

@@ -10,6 +10,8 @@
 #include<QList>
 #include<QRect>
 #include<QStandardItem>
+#include<QStyledItemDelegate>
+#include<QPainter>
 
 
 

@@ -4,7 +4,7 @@
 	<animation>
 		<ID>testAtk1</ID>
 		<frame>
-			<spriteFrame>Homura_run0000.cv2_09.png</spriteFrame>
+			<spriteFrame>stella1.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -32,7 +32,7 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>Homura_run0001.cv2_09.png</spriteFrame>
+			<spriteFrame>stella2.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -60,7 +60,7 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>Homura_run0002.cv2_09.png</spriteFrame>
+			<spriteFrame>stella3.png</spriteFrame>
 			<delayUnits>2</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -87,12 +87,15 @@
 				</rect>
 			</phyRectBox>
 		</frame>
+	</animation>
+	<animation>
+		<ID>testAnimation</ID>
 		<frame>
-			<spriteFrame>Homura_run0003.cv2_09.png</spriteFrame>
+			<spriteFrame>attackBa000.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
-					<x>10</x>
+					<x>11</x>
 					<y>20</y>
 					<w>50</w>
 					<h>40</h>
@@ -116,11 +119,11 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>Homura_run0004.cv2_09.png</spriteFrame>
+			<spriteFrame>attackBa001.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
-					<x>15</x>
+					<x>12</x>
 					<y>20</y>
 					<w>50</w>
 					<h>40</h>
@@ -144,11 +147,11 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>Homura_run0005.cv2_09.png</spriteFrame>
+			<spriteFrame>attackBa002.png</spriteFrame>
 			<delayUnits>2</delayUnits>
 			<atkRectBox>
 				<rect>
-					<x>20</x>
+					<x>13</x>
 					<y>20</y>
 					<w>50</w>
 					<h>40</h>
@@ -160,62 +163,6 @@
 					<y>30</y>
 					<w>80</w>
 					<h>80</h>
-				</rect>
-			</bodyRectBox>
-			<phyRectBox>
-				<rect>
-					<x>0</x>
-					<y>0</y>
-					<w>100</w>
-					<h>100</h>
-				</rect>
-			</phyRectBox>
-		</frame>
-		<frame>
-			<spriteFrame>Homura_run0006.cv2_09.png</spriteFrame>
-			<delayUnits>1</delayUnits>
-			<atkRectBox>
-				<rect>
-					<x>25</x>
-					<y>20</y>
-					<w>50</w>
-					<h>40</h>
-				</rect>
-			</atkRectBox>
-			<bodyRectBox>
-				<rect>
-					<x>0</x>
-					<y>0</y>
-					<w>100</w>
-					<h>100</h>
-				</rect>
-			</bodyRectBox>
-			<phyRectBox>
-				<rect>
-					<x>0</x>
-					<y>0</y>
-					<w>100</w>
-					<h>100</h>
-				</rect>
-			</phyRectBox>
-		</frame>
-		<frame>
-			<spriteFrame>Homura_run0007.cv2_09.png</spriteFrame>
-			<delayUnits>1</delayUnits>
-			<atkRectBox>
-				<rect>
-					<x>25</x>
-					<y>20</y>
-					<w>50</w>
-					<h>40</h>
-				</rect>
-			</atkRectBox>
-			<bodyRectBox>
-				<rect>
-					<x>0</x>
-					<y>0</y>
-					<w>100</w>
-					<h>100</h>
 				</rect>
 			</bodyRectBox>
 			<phyRectBox>

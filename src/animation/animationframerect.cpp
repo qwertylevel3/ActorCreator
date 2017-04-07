@@ -5,14 +5,6 @@ AnimationFrameRect::AnimationFrameRect()
 
 }
 
-AnimationFrameRect *AnimationFrameRect::clone() const
-{
-    AnimationFrameRect* newRect=new AnimationFrameRect();
-    newRect->setRect(this->rect);
-
-    return newRect;
-}
-
 void AnimationFrameRect::setX(int x)
 {
     rect.setX(x);

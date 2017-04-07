@@ -12,7 +12,6 @@ public:
     {
         ATKRECT,BODYRECT,PHYRECT
     };
-    AnimationFrame *clone() const;
 
     AnimationFrame();
     void addAtkRect(AnimationFrameRect* rect);
@@ -26,5 +25,7 @@ protected:
     QString sprite;
     float delayUnits;
 };
+
+
 
 #endif // ANIMATIONFRAME_H

@@ -19,6 +19,8 @@ protected slots:
     void openFile();
     void newFile();
     void saveFile();
+    void changeFrame();
+    void changeAnimation();
 private:
     //debug
     void printAnimationBox();

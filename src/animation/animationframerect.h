@@ -8,7 +8,6 @@ class AnimationFrameRect:public QStandardItem
 {
 public:
     AnimationFrameRect();
-    AnimationFrameRect *clone() const;
 
     void setX(int x);
     void setY(int y);

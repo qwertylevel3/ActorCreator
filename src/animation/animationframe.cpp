@@ -1,23 +1,5 @@
 #include "animationframe.h"
 
-AnimationFrame *AnimationFrame::clone() const
-{
-    AnimationFrame* newFrame=new AnimationFrame();
-
-    for(int i=0;i<this->rowCount();i++)
-    {
-        for(int j=0;j<this->child(i)->rowCount();j++)
-        {
-            newFrame->child(i)->appendRow(
-                        this->child(i)->child(j)->clone()
-                        );
-        }
-    }
-    newFrame->setSprite(this->sprite);
-    newFrame->setDelayUnits(this->delayUnits);
-    return newFrame;
-}
-
 AnimationFrame::AnimationFrame()
 {
     QStandardItem* atkBox=new QStandardItem();
@@ -30,6 +12,9 @@ AnimationFrame::AnimationFrame()
     this->appendRow(atkBox);
     this->appendRow(bodyBox);
     this->appendRow(phyBox);
+
+    this->setEditable(false);
+
 }
 
 void AnimationFrame::addAtkRect(AnimationFrameRect* rect)
@@ -50,7 +35,14 @@ void AnimationFrame::addPhyRect(AnimationFrameRect *rect)
 void AnimationFrame::setSprite(const QString &s)
 {
     sprite=s;
-    this->setText(sprite);
+    //this->setText(sprite);
+//    this->setEditable(false);
+
+    QString iconName=QString("resource/")+s;
+    QPixmap iconPixmap(iconName);
+    QIcon icon(iconPixmap);
+    this->setSizeHint(iconPixmap.size());
+    this->setIcon(icon);
 }
 
 void AnimationFrame::setDelayUnits(float d)
