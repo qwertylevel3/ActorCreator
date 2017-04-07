@@ -12,6 +12,9 @@
 #include<QStandardItem>
 #include<QStyledItemDelegate>
 #include<QPainter>
+#include<QGraphicsView>
+#include<QGraphicsScene>
+#include<QGraphicsPixmapItem>
 
 
 

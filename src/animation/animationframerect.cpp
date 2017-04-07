@@ -2,7 +2,6 @@
 
 AnimationFrameRect::AnimationFrameRect()
 {
-
 }
 
 void AnimationFrameRect::setX(int x)

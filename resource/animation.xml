@@ -4,7 +4,7 @@
 	<animation>
 		<ID>testAtk1</ID>
 		<frame>
-			<spriteFrame>stella1.png</spriteFrame>
+			<spriteFrame>resource/stella1.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -32,7 +32,7 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>stella2.png</spriteFrame>
+			<spriteFrame>resource/stella2.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -60,7 +60,7 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>stella3.png</spriteFrame>
+			<spriteFrame>resource/stella3.png</spriteFrame>
 			<delayUnits>2</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -91,7 +91,7 @@
 	<animation>
 		<ID>testAnimation</ID>
 		<frame>
-			<spriteFrame>attackBa000.png</spriteFrame>
+			<spriteFrame>resource/attackBa000.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -119,7 +119,7 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>attackBa001.png</spriteFrame>
+			<spriteFrame>resource/attackBa001.png</spriteFrame>
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
@@ -147,7 +147,7 @@
 			</phyRectBox>
 		</frame>
 		<frame>
-			<spriteFrame>attackBa002.png</spriteFrame>
+			<spriteFrame>resource/attackBa002.png</spriteFrame>
 			<delayUnits>2</delayUnits>
 			<atkRectBox>
 				<rect>

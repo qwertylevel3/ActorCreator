@@ -25,6 +25,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->phyRectView->setModel(model);
     ui->frameView->setModel(model);
     ui->animationView->setModel(model);
+
+
+    view=new QGraphicsView(this);
+    scene=new QGraphicsScene(this);
+
+    ui->scrollArea->setWidget(view);
+    view->setScene(scene);
+
 }
 
 MainWindow::~MainWindow()
@@ -72,6 +80,12 @@ void MainWindow::changeFrame()
     ui->atkRectView->setRootIndex(atkRootIndex);
     ui->bodyRectView->setRootIndex(bodyRootIndex);
     ui->phyRectView->setRootIndex(phyRootIndex);
+
+    scene->clear();
+    QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
+    QGraphicsPixmapItem* pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
+    scene->addItem(pixmapItem);
+
 }
 
 void MainWindow::changeAnimation()
@@ -97,7 +111,7 @@ void MainWindow::printAnimationBox()
         {
             AnimationFrame* frame=static_cast<AnimationFrame*>(animation->child(i));
 
-            std::cout<<frame->getSprite().toStdString()<<std::endl;
+            std::cout<<frame->getSpriteName().toStdString()<<std::endl;
         }
     }
 }

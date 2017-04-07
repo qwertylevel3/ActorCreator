@@ -38,8 +38,7 @@ void AnimationFrame::setSprite(const QString &s)
     //this->setText(sprite);
 //    this->setEditable(false);
 
-    QString iconName=QString("resource/")+s;
-    QPixmap iconPixmap(iconName);
+    QPixmap iconPixmap(s);
     QIcon icon(iconPixmap);
     this->setSizeHint(iconPixmap.size());
     this->setIcon(icon);
@@ -50,7 +49,7 @@ void AnimationFrame::setDelayUnits(float d)
     delayUnits=d;
 }
 
-QString AnimationFrame::getSprite()
+QString AnimationFrame::getSpriteName()
 {
     return sprite;
 }

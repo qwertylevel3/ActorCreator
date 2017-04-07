@@ -19,7 +19,7 @@ public:
     void addPhyRect(AnimationFrameRect* rect);
     void setSprite(const QString& s);
     void setDelayUnits(float d);
-    QString getSprite();
+    QString getSpriteName();
     float getDelayUnits();
 protected:
     QString sprite;

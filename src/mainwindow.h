@@ -30,6 +30,8 @@ private:
     QModelIndex curAnimationIndex;
     QModelIndex curFrameIndex;
     QStandardItemModel* model{nullptr};
+    QGraphicsScene* scene;
+    QGraphicsView* view;
 };
 
 #endif // MAINWINDOW_H
