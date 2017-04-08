@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"animationbox.h"
+#include"rect.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -26,13 +27,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->frameView->setModel(model);
     ui->animationView->setModel(model);
 
-
     view=new QGraphicsView(this);
     scene=new QGraphicsScene(this);
 
-    ui->scrollArea->setWidget(view);
+//    ui->scrollArea->setWidget(view);
+    ui->dockWidget_3->setWidget(view);
     view->setScene(scene);
+    view->setAcceptDrops(true);
 
+    open("resource/animation.xml");
 }
 
 MainWindow::~MainWindow()
@@ -43,20 +46,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::openFile()
 {
-    QString fileName=QFileDialog::getOpenFileName(this,
+    QString filename=QFileDialog::getOpenFileName(this,
                                                   tr("Open animation file"),".",
                                                   tr("animation file(*.xml)"));
+    open(filename);
 
-    if(!fileName.isEmpty()
-                    && animationBox->init(fileName))
-    {
-//        printAnimationBox();
-
-        curAnimationIndex=animationBox->child(0)->index();
-        ui->animationView->setRootIndex(animationBox->index());
-        ui->animationView->setCurrentIndex(curAnimationIndex);
-        changeAnimation();
-    }
 }
 
 void MainWindow::newFile()
@@ -86,6 +80,9 @@ void MainWindow::changeFrame()
     QGraphicsPixmapItem* pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
     scene->addItem(pixmapItem);
 
+   // QRect rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(atkRootIndex.child(0,0)))->getRect();
+
+    scene->addItem(new Rect());
 }
 
 void MainWindow::changeAnimation()
@@ -113,5 +110,19 @@ void MainWindow::printAnimationBox()
 
             std::cout<<frame->getSpriteName().toStdString()<<std::endl;
         }
+    }
+}
+
+void MainWindow::open(const QString &filename)
+{
+    if(!filename.isEmpty()
+                    && animationBox->init(filename))
+    {
+//        printAnimationBox();
+
+        curAnimationIndex=animationBox->child(0)->index();
+        ui->animationView->setRootIndex(animationBox->index());
+        ui->animationView->setCurrentIndex(curAnimationIndex);
+        changeAnimation();
     }
 }

@@ -62,3 +62,8 @@ void AnimationFrameRect::setRect(QRect r)
     this->rect=r;
     updateText();
 }
+
+QRect AnimationFrameRect::getRect()
+{
+    return rect;
+}

@@ -22,7 +22,8 @@ SOURCES +=\
     src/animation/animationbox.cpp \
     src/animation/animationframe.cpp \
     src/animation/animationframerect.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/rect.cpp
 
 HEADERS  +=\
     src/stable.h \
@@ -30,7 +31,8 @@ HEADERS  +=\
     src/animation/animationbox.h \
     src/animation/animationframe.h \
     src/animation/animationframerect.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/rect.h
 
 FORMS    += \
     src/mainwindow.ui
@@ -39,4 +41,7 @@ FORMS    += \
 INCLUDEPATH += $$PWD\src\
 INCLUDEPATH += $$PWD\src\animation\
 INCLUDEPATH += $$PWD\resource\
+
+RESOURCES += \
+    resource/res.qrc
 

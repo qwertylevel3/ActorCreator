@@ -11,7 +11,6 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -24,6 +23,7 @@ protected slots:
 private:
     //debug
     void printAnimationBox();
+    void open(const QString& filename);
 
     Ui::MainWindow *ui;
     AnimationBox* animationBox;

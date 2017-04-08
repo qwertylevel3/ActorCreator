@@ -18,6 +18,7 @@ public:
     int getWidth();
     int getHeight();
     void setRect(QRect r);
+    QRect getRect();
 
     void updateText();
 protected:

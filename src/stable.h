@@ -15,6 +15,8 @@
 #include<QGraphicsView>
 #include<QGraphicsScene>
 #include<QGraphicsPixmapItem>
+#include<QGraphicsObject>
+#include<QGraphicsSceneDragDropEvent>
 
 
 
