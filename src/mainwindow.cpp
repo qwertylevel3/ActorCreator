@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"animationbox.h"
-#include"rect.h"
+#include"rectobject.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -36,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setAcceptDrops(true);
 
     open("resource/animation.xml");
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    timer->start(1/60);
 }
 
 MainWindow::~MainWindow()
@@ -82,7 +86,7 @@ void MainWindow::changeFrame()
 
    // QRect rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(atkRootIndex.child(0,0)))->getRect();
 
-    scene->addItem(new Rect());
+    scene->addItem(new RectObject());
 }
 
 void MainWindow::changeAnimation()
@@ -94,6 +98,13 @@ void MainWindow::changeAnimation()
     ui->frameView->setCurrentIndex(curAnimationIndex.child(0,0));
 
     changeFrame();
+}
+
+void MainWindow::update()
+{
+    QMainWindow::update();
+    view->update();
+    scene->update();
 }
 
 void MainWindow::printAnimationBox()

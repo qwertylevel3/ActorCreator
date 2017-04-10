@@ -17,6 +17,7 @@
 #include<QGraphicsPixmapItem>
 #include<QGraphicsObject>
 #include<QGraphicsSceneDragDropEvent>
+#include<QTimer>
 
 
 

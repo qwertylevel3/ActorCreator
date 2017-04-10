@@ -23,7 +23,8 @@ SOURCES +=\
     src/animation/animationframe.cpp \
     src/animation/animationframerect.cpp \
     src/mainwindow.cpp \
-    src/rect.cpp
+    src/rectdialog.cpp \
+    src/rectobject.cpp
 
 HEADERS  +=\
     src/stable.h \
@@ -32,10 +33,12 @@ HEADERS  +=\
     src/animation/animationframe.h \
     src/animation/animationframerect.h \
     src/mainwindow.h \
-    src/rect.h
+    src/rectdialog.h \
+    src/rectobject.h
 
 FORMS    += \
-    src/mainwindow.ui
+    src/mainwindow.ui \
+    src/rectdialog.ui
 
 
 INCLUDEPATH += $$PWD\src\
