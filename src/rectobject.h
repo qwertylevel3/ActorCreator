@@ -12,12 +12,14 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) Q_DECL_OVERRIDE;
     void setRect(QRectF r);
     QRectF getRect();
+    void setRectColor(QColor c);
 //TODO
 //    void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 protected:
     QRectF rect;
     QPointF startPos;
+    QColor color;
 };
 
 #endif // RECTOBJECT_H

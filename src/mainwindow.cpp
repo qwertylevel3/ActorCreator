@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeAnimation()));
     connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
 
+    connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(changeRectTab(int)));
     animationBox=new AnimationBox;
     model=new QStandardItemModel();
     model->appendRow(animationBox);
@@ -86,7 +87,8 @@ void MainWindow::changeFrame()
 
    // QRect rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(atkRootIndex.child(0,0)))->getRect();
 
-    scene->addItem(new RectObject());
+//    scene->addItem(new RectObject());
+    showAtkRect();
 }
 
 void MainWindow::changeAnimation()
@@ -105,6 +107,26 @@ void MainWindow::update()
     QMainWindow::update();
     view->update();
     scene->update();
+}
+
+void MainWindow::changeRectTab(int index)
+{
+    scene->clear();
+    showSprite();
+    switch(index)
+    {
+    case 0:
+        showAtkRect();
+        break;
+    case 1:
+        showBodyRect();
+        break;
+    case 2:
+        showPhyRect();
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::printAnimationBox()
@@ -136,4 +158,65 @@ void MainWindow::open(const QString &filename)
         ui->animationView->setCurrentIndex(curAnimationIndex);
         changeAnimation();
     }
+}
+
+void MainWindow::showAtkRect()
+{
+    QModelIndex atkRootIndex=curFrameIndex.child(0,0);
+    QStandardItem* root=model->itemFromIndex(atkRootIndex);
+
+    for(int i=0;i<root->rowCount();i++)
+    {
+        AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
+
+        QRect rect=rectItem->getRect();
+
+        RectObject* rectobject=new RectObject();
+        rectobject->setRect(rect);
+        rectobject->setRectColor(QColor(255,0,0));
+        scene->addItem(rectobject);
+    }
+}
+
+void MainWindow::showBodyRect()
+{
+    QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
+    QStandardItem* root=model->itemFromIndex(bodyRootIndex);
+
+    for(int i=0;i<root->rowCount();i++)
+    {
+        AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
+
+        QRect rect=rectItem->getRect();
+
+        RectObject* rectobject=new RectObject();
+        rectobject->setRect(rect);
+        rectobject->setRectColor(QColor(0,0,255));
+        scene->addItem(rectobject);
+    }
+}
+
+void MainWindow::showPhyRect()
+{
+    QModelIndex phyRootIndex=curFrameIndex.child(2,0);
+    QStandardItem* root=model->itemFromIndex(phyRootIndex);
+
+    for(int i=0;i<root->rowCount();i++)
+    {
+        AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
+
+        QRect rect=rectItem->getRect();
+
+        RectObject* rectobject=new RectObject();
+        rectobject->setRect(rect);
+        rectobject->setRectColor(QColor(0,255,0));
+        scene->addItem(rectobject);
+    }
+}
+
+void MainWindow::showSprite()
+{
+    QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
+    QGraphicsPixmapItem* pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
+    scene->addItem(pixmapItem);
 }

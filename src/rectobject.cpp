@@ -20,7 +20,10 @@ void RectObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
+    painter->setOpacity(0.5);
+    painter->setBrush(QBrush(color,Qt::SolidPattern));
     painter->drawRect(rect);
+    //painter->fillRect(rect,brush);
 }
 
 void RectObject::setRect(QRectF r)
@@ -32,6 +35,11 @@ void RectObject::setRect(QRectF r)
 QRectF RectObject::getRect()
 {
     return rect;
+}
+
+void RectObject::setRectColor(QColor c)
+{
+    color=c;
 }
 
 void RectObject::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
