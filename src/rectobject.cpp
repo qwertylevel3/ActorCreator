@@ -1,45 +1,37 @@
 #include "rectobject.h"
 #include"rectdialog.h"
+#include"animationframerect.h"
 
 using namespace std;
 
-RectObject::RectObject()
+RectObject::RectObject(AnimationFrameRect* r)
+    :rectPtr(r)
 {
     setFlag(QGraphicsItem::ItemIsMovable,true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
-    rect=QRectF(0,0,50,50);
-}
-
-QRectF RectObject::boundingRect() const
-{
-    return rect;
-}
-
-void RectObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-
-    painter->setOpacity(0.5);
-    painter->setBrush(QBrush(color,Qt::SolidPattern));
-    painter->drawRect(rect);
-    //painter->fillRect(rect,brush);
-}
-
-void RectObject::setRect(QRectF r)
-{
-    rect=r;
-    update();
-}
-
-QRectF RectObject::getRect()
-{
-    return rect;
+    this->setRect(rectPtr->getRect());
 }
 
 void RectObject::setRectColor(QColor c)
 {
     color=c;
+}
+
+void RectObject::setRectWidth(int w)
+{
+    rectPtr->setWidth(w);
+    this->setRect(rectPtr->getRect());
+}
+
+void RectObject::setRectHeight(int h)
+{
+    rectPtr->setHeight(h);
+    this->setRect(rectPtr->getRect());
+}
+
+void RectObject::setParentItem(QGraphicsItem *parent)
+{
+    QGraphicsRectItem::setParentItem(parent);
 }
 
 void RectObject::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
@@ -49,6 +41,36 @@ void RectObject::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     {
         return;
     }
+    this->setRect(rectPtr->getRect());
+}
+
+void RectObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsRectItem::mousePressEvent(event);
+    startPos=event->pos();
+    startPos=mapToScene(startPos);
+}
+
+
+void RectObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsRectItem::mouseReleaseEvent(event);
+//    QPointF endPos=event->pos();
+//    endPos=mapToScene(endPos);
+//    QPointF dis=endPos-startPos;
+//    rectPtr->moveBy(dis);
+//    this->setRect(rectPtr->getRect());
+}
+
+void RectObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+//    QGraphicsRectItem::mouseMoveEvent(event);
+    QPointF endPos=event->pos();
+    endPos=mapToScene(endPos);
+    QPointF dis=endPos-startPos;
+    startPos=endPos;
+    rectPtr->moveBy(dis);
+    this->setRect(rectPtr->getRect());
 }
 
 

@@ -4,22 +4,27 @@
 #include"stable.h"
 
 
-class RectObject:public QGraphicsObject
+class AnimationFrameRect;
+
+
+class RectObject:public QGraphicsRectItem
 {
 public:
-    RectObject();
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) Q_DECL_OVERRIDE;
-    void setRect(QRectF r);
-    QRectF getRect();
+    RectObject(AnimationFrameRect* r);
     void setRectColor(QColor c);
+    void setRectWidth(int w);
+    void setRectHeight(int h);
+    void setParentItem(QGraphicsItem *parent);
 //TODO
-//    void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 protected:
-    QRectF rect;
+    void save();
     QPointF startPos;
     QColor color;
+    AnimationFrameRect* rectPtr;
 };
 
 #endif // RECTOBJECT_H

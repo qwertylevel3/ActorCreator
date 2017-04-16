@@ -4,18 +4,6 @@ AnimationFrameRect::AnimationFrameRect()
 {
 }
 
-void AnimationFrameRect::setX(int x)
-{
-    rect.setX(x);
-    updateText();
-}
-
-void AnimationFrameRect::setY(int y)
-{
-    rect.setY(y);
-    updateText();
-}
-
 void AnimationFrameRect::setWidth(int w)
 {
     rect.setWidth(w);
@@ -25,6 +13,18 @@ void AnimationFrameRect::setWidth(int w)
 void AnimationFrameRect::setHeight(int h)
 {
     rect.setHeight(h);
+    updateText();
+}
+
+void AnimationFrameRect::setX(int x)
+{
+    rect.setX(x);
+    updateText();
+}
+
+void AnimationFrameRect::setY(int y)
+{
+    rect.setY(y);
     updateText();
 }
 
@@ -57,13 +57,19 @@ void AnimationFrameRect::updateText()
     this->setText(text);
 }
 
-void AnimationFrameRect::setRect(QRect r)
+void AnimationFrameRect::setRect(QRectF r)
 {
     this->rect=r;
     updateText();
 }
 
-QRect AnimationFrameRect::getRect()
+
+QRectF AnimationFrameRect::getRect()
 {
     return rect;
+}
+
+void AnimationFrameRect::moveBy(QPointF dis)
+{
+    rect.moveTo(rect.x()+dis.x(),rect.y()+dis.y());
 }

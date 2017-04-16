@@ -82,7 +82,7 @@ void MainWindow::changeFrame()
 
     scene->clear();
     QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
-    QGraphicsPixmapItem* pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
+    pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
     scene->addItem(pixmapItem);
 
    // QRect rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(atkRootIndex.child(0,0)))->getRect();
@@ -169,12 +169,14 @@ void MainWindow::showAtkRect()
     {
         AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
 
-        QRect rect=rectItem->getRect();
 
-        RectObject* rectobject=new RectObject();
-        rectobject->setRect(rect);
+        RectObject* rectobject=new RectObject(rectItem);
         rectobject->setRectColor(QColor(255,0,0));
+//        rectobject->setPos(rectItem->getRect().center());
+       // rectobject->setParentItem(pixmapItem);
         scene->addItem(rectobject);
+
+
     }
 }
 
@@ -187,11 +189,11 @@ void MainWindow::showBodyRect()
     {
         AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
 
-        QRect rect=rectItem->getRect();
 
-        RectObject* rectobject=new RectObject();
-        rectobject->setRect(rect);
+        RectObject* rectobject=new RectObject(rectItem);
         rectobject->setRectColor(QColor(0,0,255));
+//        scene->addItem(rectobject);
+//        rectobject->setParentItem(pixmapItem);
         scene->addItem(rectobject);
     }
 }
@@ -205,12 +207,12 @@ void MainWindow::showPhyRect()
     {
         AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
 
-        QRect rect=rectItem->getRect();
 
-        RectObject* rectobject=new RectObject();
-        rectobject->setRect(rect);
+        RectObject* rectobject=new RectObject(rectItem);
         rectobject->setRectColor(QColor(0,255,0));
         scene->addItem(rectobject);
+//        rectobject->setParentItem(pixmapItem);
+
     }
 }
 

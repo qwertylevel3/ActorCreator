@@ -26,7 +26,9 @@ protected slots:
 private:
     //debug
     void printAnimationBox();
+
     void open(const QString& filename);
+//    void saveModel();
 
     void showAtkRect();
     void showBodyRect();
@@ -40,6 +42,7 @@ private:
     QStandardItemModel* model{nullptr};
     QGraphicsScene* scene;
     QGraphicsView* view;
+    QGraphicsPixmapItem* pixmapItem;
 };
 
 #endif // MAINWINDOW_H

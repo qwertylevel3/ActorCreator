@@ -8,8 +8,8 @@
 			<delayUnits>1</delayUnits>
 			<atkRectBox>
 				<rect>
-					<x>30</x>
-					<y>30</y>
+					<x>0</x>
+					<y>0</y>
 					<w>30</w>
 					<h>30</h>
 				</rect>
@@ -28,7 +28,7 @@
 			</atkRectBox>
 			<bodyRectBox>
 				<rect>
-					<x>30</x>
+					<x>100</x>
 					<y>30</y>
 					<w>80</w>
 					<h>80</h>

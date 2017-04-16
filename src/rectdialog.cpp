@@ -8,7 +8,7 @@ RectDialog::RectDialog(QWidget *parent,RectObject* rectObject) :
 {
     ui->setupUi(this);
 
-    QRectF rect=rectObj->getRect();
+    QRectF rect=rectObj->rect();
     ui->wSpinBox->setValue(rect.width());
     ui->hSpinBox->setValue(rect.height());
 
@@ -23,14 +23,10 @@ RectDialog::~RectDialog()
 
 void RectDialog::changeW(int w)
 {
-    QRectF rect=rectObj->getRect();
-    rect.setWidth(w);
-    rectObj->setRect(rect);
+    rectObj->setRectWidth(w);
 }
 
 void RectDialog::changeH(int h)
 {
-    QRectF rect=rectObj->getRect();
-    rect.setHeight(h);
-    rectObj->setRect(rect);
+    rectObj->setRectHeight(h);
 }

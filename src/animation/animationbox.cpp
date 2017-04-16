@@ -129,18 +129,24 @@ void AnimationBox::readRect(AnimationFrameRect* rect,QDomElement& element)
 {
     //x
     QDomElement attrElement=element.firstChildElement();
-    rect->setX(attrElement.text().toInt());
+    int x=attrElement.text().toInt();
 
     //y
     attrElement=attrElement.nextSiblingElement();
-    rect->setY(attrElement.text().toInt());
+    int y=attrElement.text().toInt();
 
     //w
     attrElement=attrElement.nextSiblingElement();
-    rect->setWidth(attrElement.text().toInt());
+    int w=attrElement.text().toInt();
 
     //h
     attrElement=attrElement.nextSiblingElement();
-    rect->setHeight(attrElement.text().toInt());
+    int h=attrElement.text().toInt();
+
+
+    rect->setX(x);
+    rect->setY(y);//+h);
+    rect->setWidth(w);
+    rect->setHeight(h);
 
 }
