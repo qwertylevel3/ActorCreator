@@ -31,6 +31,7 @@ private:
     void connectActions();
 
     void open(const QString& filename);
+    void close();
 //    void saveModel();
 
     void showAtkRect();

@@ -14,15 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connectActions();
 
-    model=new QStandardItemModel();
-    animationBox=new AnimationBox;
-    model->appendRow(animationBox);
 
-    ui->atkRectView->setModel(model);
-    ui->bodyRectView->setModel(model);
-    ui->phyRectView->setModel(model);
-    ui->frameView->setModel(model);
-    ui->animationView->setModel(model);
+    model=nullptr;
+
+
+
 
     view=new QGraphicsView(this);
     scene=new QGraphicsScene(this);
@@ -75,11 +71,11 @@ void MainWindow::closeFile()
         if(choose==QMessageBox::Yes)
         {
             saveFile();
-            animationBox->clear();
+            close();
         }
         else if(choose==QMessageBox::No)
         {
-            animationBox->clear();
+            close();
         }
         else if(choose==QMessageBox::Cancel)
         {
@@ -88,12 +84,16 @@ void MainWindow::closeFile()
     }
     else
     {
-        animationBox->clear();
+        close();
     }
 }
 
 void MainWindow::changeFrame()
 {
+    if(!model)
+    {
+        return;
+    }
     curFrameIndex=ui->frameView->currentIndex();
 
     QModelIndex atkRootIndex=curFrameIndex.child(0,0);
@@ -112,6 +112,10 @@ void MainWindow::changeFrame()
 
 void MainWindow::changeAnimation()
 {
+    if(!model)
+    {
+        return;
+    }
     curAnimationIndex=ui->animationView->currentIndex();
     curFrameIndex=curAnimationIndex.child(0,0);
 
@@ -131,6 +135,10 @@ void MainWindow::update()
 void MainWindow::changeRectTab(int index)
 {
     scene->clear();
+    if(!model)
+    {
+        return;
+    }
     showSprite();
     switch(index)
     {
@@ -180,6 +188,16 @@ void MainWindow::connectActions()
 
 void MainWindow::open(const QString &filename)
 {
+    model=new QStandardItemModel();
+    animationBox=new AnimationBox;
+    model->appendRow(animationBox);
+
+    ui->atkRectView->setModel(model);
+    ui->bodyRectView->setModel(model);
+    ui->phyRectView->setModel(model);
+    ui->frameView->setModel(model);
+    ui->animationView->setModel(model);
+
     if(!filename.isEmpty()
                     && animationBox->init(filename))
     {
@@ -190,8 +208,19 @@ void MainWindow::open(const QString &filename)
     }
 }
 
+void MainWindow::close()
+{
+    scene->clear();
+    delete model;
+    model=nullptr;
+}
+
 void MainWindow::showAtkRect()
 {
+    if(!model)
+    {
+        return;
+    }
     QModelIndex atkRootIndex=curFrameIndex.child(0,0);
     QStandardItem* root=model->itemFromIndex(atkRootIndex);
 
@@ -207,6 +236,10 @@ void MainWindow::showAtkRect()
 
 void MainWindow::showBodyRect()
 {
+    if(!model)
+    {
+        return;
+    }
     QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
     QStandardItem* root=model->itemFromIndex(bodyRootIndex);
 
@@ -225,6 +258,10 @@ void MainWindow::showBodyRect()
 
 void MainWindow::showPhyRect()
 {
+    if(!model)
+    {
+        return;
+    }
     QModelIndex phyRootIndex=curFrameIndex.child(2,0);
     QStandardItem* root=model->itemFromIndex(phyRootIndex);
 
@@ -241,6 +278,10 @@ void MainWindow::showPhyRect()
 
 void MainWindow::showSprite()
 {
+    if(!model)
+    {
+        return;
+    }
     QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
     pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
     pixmapItem->setPos(pixmapItem->pos().x(),-pixmapItem->boundingRect().height());
