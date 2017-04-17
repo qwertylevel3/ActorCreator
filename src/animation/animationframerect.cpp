@@ -18,12 +18,14 @@ void AnimationFrameRect::setHeight(int h)
 
 void AnimationFrameRect::setX(int x)
 {
+//    rect.translate(x,rect.y());
     rect.setX(x);
     updateText();
 }
 
 void AnimationFrameRect::setY(int y)
 {
+//    rect.translate(rect.x(),y);
     rect.setY(y);
     updateText();
 }
@@ -59,6 +61,9 @@ void AnimationFrameRect::updateText()
 
 void AnimationFrameRect::setRect(QRectF r)
 {
+//    QRectF temp=r;
+//    temp.setY(-temp.y());
+//    this->rect=temp;
     this->rect=r;
     updateText();
 }

@@ -39,6 +39,43 @@ bool AnimationBox::init(const QString &fileName)
     return true;
 }
 
+bool AnimationBox::save(const QString &fileName)
+{
+
+    QDomDocument doc;
+//    QString errorStr;
+//    int errorLine;
+//    int errorColumn;
+//    if(!doc.setContent(&file,false,&errorStr,&errorLine,&errorColumn))
+//    {
+//        std::cerr<<"error: parse error at line"<<errorLine<<","
+//                <<"column "<<errorColumn<<":"
+//               <<qPrintable(errorStr)<<std::endl;
+//        return false;
+//    }
+
+    QDomElement animationBoxElement=doc.createElement("animationBox");
+    doc.appendChild(animationBoxElement);
+
+    for(int i=0;i<this->rowCount();i++)
+    {
+        Animation* animation=static_cast<Animation*>(this->child(i));
+        saveAnimation(doc,animationBoxElement,animation);
+    }
+    QString docStr=doc.toString();
+    QFile file(fileName);
+
+    if(!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        std::cerr<<fileName.toStdString()<<" can not open"<<std::endl;
+        return false;
+    }
+    QTextStream txtOutput(&file);
+    txtOutput<<docStr<<endl;
+
+    return true;
+}
+
 
 void AnimationBox::clear()
 {
@@ -143,10 +180,99 @@ void AnimationBox::readRect(AnimationFrameRect* rect,QDomElement& element)
     attrElement=attrElement.nextSiblingElement();
     int h=attrElement.text().toInt();
 
-
     rect->setX(x);
-    rect->setY(y);//+h);
+    rect->setY(-y-h);
     rect->setWidth(w);
     rect->setHeight(h);
+}
 
+void AnimationBox::saveAnimation(QDomDocument& doc,QDomElement &node, Animation *animation)
+{
+    QDomElement animationElement=doc.createElement("animation");
+    node.appendChild(animationElement);
+
+    QDomElement idElement=doc.createElement("ID");
+    animationElement.appendChild(idElement);
+    QString id=animation->getID();
+    QDomText idText=doc.createTextNode(id);
+    idElement.appendChild(idText);
+
+
+    for(int i=0;i<animation->rowCount();i++)
+    {
+        QDomElement frameElement=doc.createElement("frame");
+        animationElement.appendChild(frameElement);
+
+        AnimationFrame* animationFrame=static_cast<AnimationFrame*>(animation->child(i));
+
+        QDomElement spriteFrameElement=doc.createElement("spriteFrame");
+        frameElement.appendChild(spriteFrameElement);
+        QDomText spriteFrameText=doc.createTextNode(animationFrame->getSpriteName());
+        spriteFrameElement.appendChild(spriteFrameText);
+
+        QDomElement delayUnitsElement=doc.createElement("delayUnits");
+        frameElement.appendChild(delayUnitsElement);
+        QDomText delayUnitsText=doc.createTextNode(QString::number(animationFrame->getDelayUnits()));
+        delayUnitsElement.appendChild(delayUnitsText);
+
+        QDomElement atkBoxElement=doc.createElement("atkRectBox");
+        frameElement.appendChild(atkBoxElement);
+        QStandardItem* atkBox=animationFrame->child(0);
+        for(int i=0;i<atkBox->rowCount();i++)
+        {
+            AnimationFrameRect* animationFrameRect=
+                    static_cast<AnimationFrameRect*>(atkBox->child(i));
+            saveRect(doc,atkBoxElement,animationFrameRect);
+        }
+        QDomElement bodyBoxElement=doc.createElement("bodyRectBox");
+        frameElement.appendChild(bodyBoxElement);
+        QStandardItem* bodyBox=animationFrame->child(1);
+        for(int i=0;i<bodyBox->rowCount();i++)
+        {
+            AnimationFrameRect* animationFrameRect=
+                    static_cast<AnimationFrameRect*>(bodyBox->child(i));
+            saveRect(doc,bodyBoxElement,animationFrameRect);
+        }
+
+        QDomElement phyBoxElement=doc.createElement("phyRectBox");
+        frameElement.appendChild(phyBoxElement);
+        QStandardItem* phyBox=animationFrame->child(2);
+        for(int i=0;i<phyBox->rowCount();i++)
+        {
+            AnimationFrameRect* animationFrameRect=
+                    static_cast<AnimationFrameRect*>(phyBox->child(i));
+            saveRect(doc,phyBoxElement,animationFrameRect);
+        }
+    }
+}
+
+void AnimationBox::saveRect(QDomDocument &doc, QDomElement &node, AnimationFrameRect *animationFrameRect)
+{
+    QDomElement rectElement=doc.createElement("rect");
+    node.appendChild(rectElement);
+
+    int x=animationFrameRect->getX();
+    int y=animationFrameRect->getY();
+    int w=animationFrameRect->getWidth();
+    int h=animationFrameRect->getHeight();
+
+    QDomElement xElement=doc.createElement("x");
+    rectElement.appendChild(xElement);
+    QDomText xText=doc.createTextNode(QString::number(x));
+    xElement.appendChild(xText);
+
+    QDomElement yElement=doc.createElement("y");
+    rectElement.appendChild(yElement);
+    QDomText yText=doc.createTextNode(QString::number(-y-h));
+    yElement.appendChild(yText);
+
+    QDomElement wElement=doc.createElement("w");
+    rectElement.appendChild(wElement);
+    QDomText wText=doc.createTextNode(QString::number(w));
+    wElement.appendChild(wText);
+
+    QDomElement hElement=doc.createElement("h");
+    rectElement.appendChild(hElement);
+    QDomText hText=doc.createTextNode(QString::number(h));
+    hElement.appendChild(hText);
 }

@@ -36,7 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setScene(scene);
     view->setAcceptDrops(true);
 
-    open("resource/animation.xml");
+//    open("resource/animation.xml");
+    open("tempWrite.xml");
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -65,7 +66,7 @@ void MainWindow::newFile()
 
 void MainWindow::saveFile()
 {
-    std::cout<<"save"<<std::endl;
+    animationBox->save("tempWrite.xml");
 }
 
 void MainWindow::changeFrame()
@@ -81,9 +82,8 @@ void MainWindow::changeFrame()
     ui->phyRectView->setRootIndex(phyRootIndex);
 
     scene->clear();
-    QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
-    pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
-    scene->addItem(pixmapItem);
+
+    showSprite();
 
    // QRect rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(atkRootIndex.child(0,0)))->getRect();
 
@@ -219,6 +219,7 @@ void MainWindow::showPhyRect()
 void MainWindow::showSprite()
 {
     QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
-    QGraphicsPixmapItem* pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
+    pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
+    pixmapItem->setPos(pixmapItem->pos().x(),-pixmapItem->boundingRect().height());
     scene->addItem(pixmapItem);
 }

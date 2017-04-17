@@ -18,6 +18,7 @@
 #include<QGraphicsObject>
 #include<QGraphicsSceneDragDropEvent>
 #include<QTimer>
+#include<QTextStream>
 
 
 
