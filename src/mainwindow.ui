@@ -31,12 +31,24 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionAnimationWindow"/>
+    <addaction name="actionFrameWindow"/>
+    <addaction name="actionSpriteWindow"/>
+    <addaction name="actionRectWindow"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QDockWidget" name="dockWidget">
+  <widget class="QDockWidget" name="rectDockWidget">
    <property name="windowTitle">
     <string>RectWindow</string>
    </property>
@@ -85,7 +97,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget_2">
+  <widget class="QDockWidget" name="frameDockWidget">
    <property name="windowTitle">
     <string>FrameWindow</string>
    </property>
@@ -110,7 +122,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget_3">
+  <widget class="QDockWidget" name="spriteDockWidget">
    <property name="windowTitle">
     <string>SpriteWindow</string>
    </property>
@@ -121,7 +133,7 @@
     <layout class="QHBoxLayout" name="horizontalLayout_5"/>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget_4">
+  <widget class="QDockWidget" name="animationDockWidget">
    <property name="windowTitle">
     <string>AnimationWindow</string>
    </property>
@@ -184,6 +196,55 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="actionAnimationWindow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>AnimationWindow</string>
+   </property>
+  </action>
+  <action name="actionFrameWindow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>FrameWindow</string>
+   </property>
+  </action>
+  <action name="actionSpriteWindow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>SpriteWindow</string>
+   </property>
+  </action>
+  <action name="actionRectWindow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>RectWindow</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../resource/res.qrc"/>
@@ -202,6 +263,134 @@
     <hint type="destinationlabel">
      <x>258</x>
      <y>238</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAnimationWindow</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>animationDockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>117</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>animationDockWidget</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionAnimationWindow</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frameDockWidget</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionFrameWindow</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spriteDockWidget</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionSpriteWindow</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rectDockWidget</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionRectWindow</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>425</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFrameWindow</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>frameDockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSpriteWindow</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>spriteDockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>39</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRectWindow</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>rectDockWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>

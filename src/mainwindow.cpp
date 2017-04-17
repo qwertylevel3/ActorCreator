@@ -8,18 +8,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    modified=false;
+
     ui->setupUi(this);
 
-    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(openFile()));
-    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
-    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
+    connectActions();
 
-    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeAnimation()));
-    connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
-
-    connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(changeRectTab(int)));
-    animationBox=new AnimationBox;
     model=new QStandardItemModel();
+    animationBox=new AnimationBox;
     model->appendRow(animationBox);
 
     ui->atkRectView->setModel(model);
@@ -31,14 +27,11 @@ MainWindow::MainWindow(QWidget *parent) :
     view=new QGraphicsView(this);
     scene=new QGraphicsScene(this);
 
-//    ui->scrollArea->setWidget(view);
-    ui->dockWidget_3->setWidget(view);
+    ui->spriteDockWidget->setWidget(view);
     view->setScene(scene);
     view->setAcceptDrops(true);
 
-//    open("resource/animation.xml");
-    open("tempWrite.xml");
-
+    //update
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(1/60);
@@ -52,11 +45,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::openFile()
 {
-    QString filename=QFileDialog::getOpenFileName(this,
-                                                  tr("Open animation file"),".",
-                                                  tr("animation file(*.xml)"));
-    open(filename);
-
+    curFile=QFileDialog::getOpenFileName(this,
+                                         tr("Open animation file"),".",
+                                         tr("animation file(*.xml)"));
+    open(curFile);
 }
 
 void MainWindow::newFile()
@@ -66,7 +58,38 @@ void MainWindow::newFile()
 
 void MainWindow::saveFile()
 {
-    animationBox->save("tempWrite.xml");
+    animationBox->save(curFile);
+}
+
+void MainWindow::closeFile()
+{
+    if(isModified())
+    {
+        int choose=QMessageBox::warning(
+                    this,
+                    tr("warning"),
+                    tr("The document has been modified.\n"
+                       "do you wang to save?"),
+                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel
+                    );
+        if(choose==QMessageBox::Yes)
+        {
+            saveFile();
+            animationBox->clear();
+        }
+        else if(choose==QMessageBox::No)
+        {
+            animationBox->clear();
+        }
+        else if(choose==QMessageBox::Cancel)
+        {
+            return;
+        }
+    }
+    else
+    {
+        animationBox->clear();
+    }
 }
 
 void MainWindow::changeFrame()
@@ -84,10 +107,6 @@ void MainWindow::changeFrame()
     scene->clear();
 
     showSprite();
-
-   // QRect rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(atkRootIndex.child(0,0)))->getRect();
-
-//    scene->addItem(new RectObject());
     showAtkRect();
 }
 
@@ -146,13 +165,24 @@ void MainWindow::printAnimationBox()
     }
 }
 
+void MainWindow::connectActions()
+{
+    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(openFile()));
+    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
+    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
+    connect(ui->actionClose,SIGNAL(triggered(bool)),this,SLOT(closeFile()));
+
+    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeAnimation()));
+    connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
+
+    connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(changeRectTab(int)));
+}
+
 void MainWindow::open(const QString &filename)
 {
     if(!filename.isEmpty()
                     && animationBox->init(filename))
     {
-//        printAnimationBox();
-
         curAnimationIndex=animationBox->child(0)->index();
         ui->animationView->setRootIndex(animationBox->index());
         ui->animationView->setCurrentIndex(curAnimationIndex);
@@ -169,14 +199,9 @@ void MainWindow::showAtkRect()
     {
         AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
 
-
         RectObject* rectobject=new RectObject(rectItem);
         rectobject->setRectColor(QColor(255,0,0));
-//        rectobject->setPos(rectItem->getRect().center());
-       // rectobject->setParentItem(pixmapItem);
         scene->addItem(rectobject);
-
-
     }
 }
 
@@ -207,11 +232,9 @@ void MainWindow::showPhyRect()
     {
         AnimationFrameRect* rectItem=static_cast<AnimationFrameRect*>(root->child(i));
 
-
         RectObject* rectobject=new RectObject(rectItem);
         rectobject->setRectColor(QColor(0,255,0));
         scene->addItem(rectobject);
-//        rectobject->setParentItem(pixmapItem);
 
     }
 }
@@ -222,4 +245,9 @@ void MainWindow::showSprite()
     pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
     pixmapItem->setPos(pixmapItem->pos().x(),-pixmapItem->boundingRect().height());
     scene->addItem(pixmapItem);
+}
+
+bool MainWindow::isModified()
+{
+    return modified;
 }

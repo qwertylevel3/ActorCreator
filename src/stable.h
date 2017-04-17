@@ -19,6 +19,7 @@
 #include<QGraphicsSceneDragDropEvent>
 #include<QTimer>
 #include<QTextStream>
+#include<QMessageBox>
 
 
 

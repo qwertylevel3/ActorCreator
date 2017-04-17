@@ -18,6 +18,7 @@ protected slots:
     void openFile();
     void newFile();
     void saveFile();
+    void closeFile();
     void changeFrame();
     void changeAnimation();
     void update();
@@ -27,6 +28,8 @@ private:
     //debug
     void printAnimationBox();
 
+    void connectActions();
+
     void open(const QString& filename);
 //    void saveModel();
 
@@ -35,14 +38,21 @@ private:
     void showPhyRect();
     void showSprite();
 
+    bool isModified();
+
     Ui::MainWindow *ui;
+    QGraphicsScene* scene;
+    QGraphicsView* view;
+
+    QStandardItemModel* model{nullptr};
     AnimationBox* animationBox;
     QModelIndex curAnimationIndex;
     QModelIndex curFrameIndex;
-    QStandardItemModel* model{nullptr};
-    QGraphicsScene* scene;
-    QGraphicsView* view;
+
     QGraphicsPixmapItem* pixmapItem;
+
+    QString curFile;
+    bool modified;
 };
 
 #endif // MAINWINDOW_H

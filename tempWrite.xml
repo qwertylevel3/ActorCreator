@@ -6,20 +6,20 @@
    <delayUnits>1</delayUnits>
    <atkRectBox>
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>19</x>
+     <y>28</y>
      <w>30</w>
      <h>30</h>
     </rect>
     <rect>
-     <x>50</x>
-     <y>30</y>
+     <x>61</x>
+     <y>72</y>
      <w>10</w>
      <h>10</h>
     </rect>
     <rect>
-     <x>10</x>
-     <y>20</y>
+     <x>48</x>
+     <y>28</y>
      <w>40</w>
      <h>40</h>
     </rect>
