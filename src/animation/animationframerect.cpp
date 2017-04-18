@@ -1,4 +1,6 @@
 #include "animationframerect.h"
+#include"rectobject.h"
+
 
 AnimationFrameRect::AnimationFrameRect()
 {
@@ -60,16 +62,14 @@ void AnimationFrameRect::updateText()
     this->setText(text);
 }
 
-//void AnimationFrameRect::deleteSelf()
-//{
-//    this->parent()->removeRow(this->row());
-//}
+void AnimationFrameRect::selectObject()
+{
+    object->setSelected(true);
+}
+
 
 void AnimationFrameRect::setRect(QRectF r)
 {
-//    QRectF temp=r;
-//    temp.setY(-temp.y());
-//    this->rect=temp;
     this->rect=r;
     updateText();
 }

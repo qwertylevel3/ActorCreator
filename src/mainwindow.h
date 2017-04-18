@@ -31,6 +31,8 @@ protected slots:
     void deleteAtkRect();
     void deleteBodyRect();
     void deletePhyRect();
+
+    void selectRectObject(QModelIndex index);
 protected:
     void closeEvent(QCloseEvent *event);
 

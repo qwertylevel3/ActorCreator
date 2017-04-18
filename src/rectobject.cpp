@@ -10,6 +10,7 @@ RectObject::RectObject(AnimationFrameRect* r)
     setFlag(QGraphicsItem::ItemIsMovable,true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setRect(rectPtr->getRect());
+    rectPtr->object=this;
 }
 
 void RectObject::setRectColor(QColor c)
@@ -65,16 +66,6 @@ void RectObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     startPos=endPos;
     rectPtr->moveBy(dis);
     this->setRect(rectPtr->getRect());
-}
-
-void RectObject::keyPressEvent(QKeyEvent *event)
-{
-//    if(event->key()==Qt::Key_Delete)
-//    {
-//        rectPtr->deleteSelf();
-//    }
-//    this->setParentItem(nullptr);
-//    delete this;
 }
 
 

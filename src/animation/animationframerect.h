@@ -4,9 +4,12 @@
 
 #include"stable.h"
 
+class RectObject;
+
 
 class AnimationFrameRect:public QStandardItem
 {
+    friend class RectObject;
 public:
     AnimationFrameRect();
 
@@ -23,9 +26,10 @@ public:
     void moveBy(QPointF dis);
 
     void updateText();
-//    void deleteSelf();
+    void selectObject();
 protected:
     QRectF rect;
+    RectObject* object;
 };
 
 #endif // ANIMATIONFRAMERECT_H
