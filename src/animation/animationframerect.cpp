@@ -2,6 +2,7 @@
 
 AnimationFrameRect::AnimationFrameRect()
 {
+    this->setEditable(false);
 }
 
 void AnimationFrameRect::setWidth(int w)
@@ -53,7 +54,7 @@ int AnimationFrameRect::getHeight()
 void AnimationFrameRect::updateText()
 {
     QString text=QString::number(rect.x())+QString("|")
-            +QString::number(rect.y())+QString("|")
+            +QString::number(-rect.y()-rect.height())+QString("|")
             +QString::number(rect.width())+QString("|")
             +QString::number(rect.height());
     this->setText(text);

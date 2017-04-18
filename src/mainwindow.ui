@@ -6,20 +6,39 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
-    <height>582</height>
+    <width>655</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QDockWidget" name="spriteDockWidget">
+      <property name="minimumSize">
+       <size>
+        <width>128</width>
+        <height>128</height>
+       </size>
+      </property>
+      <property name="windowTitle">
+       <string>SpriteWindow</string>
+      </property>
+      <widget class="QWidget" name="dockWidgetContents_3">
+       <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>575</width>
+     <width>655</width>
      <height>23</height>
     </rect>
    </property>
@@ -102,7 +121,7 @@
     <string>FrameWindow</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -122,23 +141,12 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="spriteDockWidget">
-   <property name="windowTitle">
-    <string>SpriteWindow</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QHBoxLayout" name="horizontalLayout_5"/>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="animationDockWidget">
    <property name="windowTitle">
     <string>AnimationWindow</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>4</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -250,22 +258,6 @@
   <include location="../resource/res.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>actionExit</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>238</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>actionAnimationWindow</sender>
    <signal>triggered(bool)</signal>
@@ -391,6 +383,22 @@
     <hint type="destinationlabel">
      <x>425</x>
      <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>327</x>
+     <y>213</y>
     </hint>
    </hints>
   </connection>

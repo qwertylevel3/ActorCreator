@@ -14,25 +14,26 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+public slots:
+    void openFileSlot();
+    void newFileSlot();
+    void saveFileSlot();
+    void closeFileSlot();
 protected slots:
-    void openFile();
-    void newFile();
-    void saveFile();
-    void closeFile();
     void changeFrame();
     void changeAnimation();
     void update();
     void changeRectTab(int index);
+protected:
+    void closeEvent(QCloseEvent *event);
 
-private:
     //debug
     void printAnimationBox();
 
     void connectActions();
 
     void open(const QString& filename);
-    void close();
-//    void saveModel();
+    void closeFile();
 
     void showAtkRect();
     void showBodyRect();

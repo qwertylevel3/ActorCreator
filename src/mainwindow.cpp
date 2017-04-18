@@ -17,9 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     model=nullptr;
 
-
-
-
     view=new QGraphicsView(this);
     scene=new QGraphicsScene(this);
 
@@ -39,43 +36,44 @@ MainWindow::~MainWindow()
     delete model;
 }
 
-void MainWindow::openFile()
+
+void MainWindow::openFileSlot()
 {
     curFile=QFileDialog::getOpenFileName(this,
                                          tr("Open animation file"),".",
                                          tr("animation file(*.xml)"));
     open(curFile);
+    modified=true;
 }
 
-void MainWindow::newFile()
+void MainWindow::newFileSlot()
 {
     std::cout<<"new"<<std::endl;
 }
 
-void MainWindow::saveFile()
+void MainWindow::saveFileSlot()
 {
     animationBox->save(curFile);
 }
 
-void MainWindow::closeFile()
+void MainWindow::closeFileSlot()
 {
     if(isModified())
     {
         int choose=QMessageBox::warning(
                     this,
                     tr("warning"),
-                    tr("The document has been modified.\n"
-                       "do you wang to save?"),
+                    tr("save?"),
                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel
                     );
         if(choose==QMessageBox::Yes)
         {
-            saveFile();
-            close();
+            saveFileSlot();
+            closeFile();
         }
         else if(choose==QMessageBox::No)
         {
-            close();
+            closeFile();
         }
         else if(choose==QMessageBox::Cancel)
         {
@@ -84,7 +82,7 @@ void MainWindow::closeFile()
     }
     else
     {
-        close();
+        closeFile();
     }
 }
 
@@ -156,6 +154,11 @@ void MainWindow::changeRectTab(int index)
     }
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    closeFileSlot();
+}
+
 void MainWindow::printAnimationBox()
 {
     for(int i=0;i<animationBox->rowCount();i++)
@@ -175,10 +178,10 @@ void MainWindow::printAnimationBox()
 
 void MainWindow::connectActions()
 {
-    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(openFile()));
-    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFile()));
-    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFile()));
-    connect(ui->actionClose,SIGNAL(triggered(bool)),this,SLOT(closeFile()));
+    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(openFileSlot()));
+    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(newFileSlot()));
+    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFileSlot()));
+    connect(ui->actionClose,SIGNAL(triggered(bool)),this,SLOT(closeFileSlot()));
 
     connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeAnimation()));
     connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
@@ -208,7 +211,7 @@ void MainWindow::open(const QString &filename)
     }
 }
 
-void MainWindow::close()
+void MainWindow::closeFile()
 {
     scene->clear();
     delete model;
