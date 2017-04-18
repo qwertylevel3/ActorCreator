@@ -24,10 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setScene(scene);
     view->setAcceptDrops(true);
 
-    //update
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(1/60);
 }
 
 MainWindow::~MainWindow()
@@ -84,6 +80,7 @@ void MainWindow::closeFileSlot()
     {
         closeFile();
     }
+    modified=false;
 }
 
 void MainWindow::changeFrame()
@@ -104,8 +101,7 @@ void MainWindow::changeFrame()
 
     scene->clear();
 
-    showSprite();
-    showAtkRect();
+    updateScene();
 }
 
 void MainWindow::changeAnimation()
@@ -123,11 +119,15 @@ void MainWindow::changeAnimation()
     changeFrame();
 }
 
-void MainWindow::update()
+void MainWindow::updateScene()
 {
-    QMainWindow::update();
-    view->update();
+    scene->clear();
+
+    showSprite();
+    showRect();
+
     scene->update();
+    view->update();
 }
 
 void MainWindow::changeRectTab(int index)
@@ -138,20 +138,67 @@ void MainWindow::changeRectTab(int index)
         return;
     }
     showSprite();
-    switch(index)
+    showRect();
+}
+
+void MainWindow::addAtkRect()
+{
+    if(!model)
     {
-    case 0:
-        showAtkRect();
-        break;
-    case 1:
-        showBodyRect();
-        break;
-    case 2:
-        showPhyRect();
-        break;
-    default:
-        break;
+        return;
     }
+//    QModelIndex atkRootIndex=curFrameIndex.child(0,0);
+
+    AnimationFrame* curFrame=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex));
+
+    AnimationFrameRect* atkRect=new AnimationFrameRect();
+
+    atkRect->setWidth(20);
+    atkRect->setHeight(20);
+    atkRect->setX(0);
+    atkRect->setY(0);
+
+    curFrame->addAtkRect(atkRect);
+    updateScene();
+}
+
+void MainWindow::addBodyRect()
+{
+    if(!model)
+    {
+        return;
+    }
+
+    AnimationFrame* curFrame=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex));
+    AnimationFrameRect* bodyRect=new AnimationFrameRect();
+
+    bodyRect->setWidth(20);
+    bodyRect->setHeight(20);
+    bodyRect->setX(0);
+    bodyRect->setY(0);
+
+    curFrame->addBodyRect(bodyRect);
+    updateScene();
+
+}
+
+void MainWindow::addPhyRect()
+{
+    if(!model)
+    {
+        return;
+    }
+
+    AnimationFrame* curFrame=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex));
+    AnimationFrameRect* phyRect=new AnimationFrameRect();
+
+    phyRect->setWidth(20);
+    phyRect->setHeight(20);
+    phyRect->setX(0);
+    phyRect->setY(0);
+
+    curFrame->addPhyRect(phyRect);
+    updateScene();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -187,6 +234,11 @@ void MainWindow::connectActions()
     connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
 
     connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(changeRectTab(int)));
+
+    connect(ui->atkAddButton,SIGNAL(clicked(bool)),this,SLOT(addAtkRect()));
+    connect(ui->bodyAddButton,SIGNAL(clicked(bool)),this,SLOT(addBodyRect()));
+    connect(ui->phyAddButton,SIGNAL(clicked(bool)),this,SLOT(addPhyRect()));
+
 }
 
 void MainWindow::open(const QString &filename)
@@ -216,6 +268,25 @@ void MainWindow::closeFile()
     scene->clear();
     delete model;
     model=nullptr;
+}
+
+void MainWindow::showRect()
+{
+    int index=ui->tabWidget->currentIndex();
+    switch(index)
+    {
+    case 0:
+        showAtkRect();
+        break;
+    case 1:
+        showBodyRect();
+        break;
+    case 2:
+        showPhyRect();
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::showAtkRect()

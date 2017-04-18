@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>655</width>
-    <height>428</height>
+    <width>637</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>655</width>
+     <width>637</width>
      <height>23</height>
     </rect>
    </property>
@@ -85,9 +85,40 @@
         <attribute name="title">
          <string>atk</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <widget class="QTreeView" name="atkRectView"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="atkAddButton">
+             <property name="text">
+              <string>add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="atkDeleteButton">
+             <property name="text">
+              <string>delete</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -95,9 +126,40 @@
         <attribute name="title">
          <string>body</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QTreeView" name="bodyRectView"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bodyAddButton">
+             <property name="text">
+              <string>add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bodyDeleteButton">
+             <property name="text">
+              <string>delete</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -105,9 +167,40 @@
         <attribute name="title">
          <string>phy</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QTreeView" name="phyRectView"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="phyAddButton">
+             <property name="text">
+              <string>add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="phyDeleteButton">
+             <property name="text">
+              <string>delete</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -269,8 +362,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>287</x>
-     <y>117</y>
+     <x>626</x>
+     <y>454</y>
     </hint>
    </hints>
   </connection>
@@ -281,8 +374,8 @@
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>287</x>
-     <y>117</y>
+     <x>626</x>
+     <y>454</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -297,8 +390,8 @@
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>287</x>
-     <y>464</y>
+     <x>626</x>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -329,8 +422,8 @@
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>425</x>
-     <y>291</y>
+     <x>636</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -349,8 +442,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>287</x>
-     <y>464</y>
+     <x>626</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>
@@ -381,8 +474,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>425</x>
-     <y>291</y>
+     <x>636</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>

@@ -22,8 +22,12 @@ public slots:
 protected slots:
     void changeFrame();
     void changeAnimation();
-    void update();
+    void updateScene();
     void changeRectTab(int index);
+
+    void addAtkRect();
+    void addBodyRect();
+    void addPhyRect();
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -35,6 +39,7 @@ protected:
     void open(const QString& filename);
     void closeFile();
 
+    void showRect();
     void showAtkRect();
     void showBodyRect();
     void showPhyRect();

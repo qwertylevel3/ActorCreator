@@ -23,21 +23,45 @@
      <w>29</w>
      <h>29</h>
     </rect>
+    <rect>
+     <x>63</x>
+     <y>70</y>
+     <w>20</w>
+     <h>20</h>
+    </rect>
+    <rect>
+     <x>60</x>
+     <y>47</y>
+     <w>20</w>
+     <h>20</h>
+    </rect>
    </atkRectBox>
    <bodyRectBox>
     <rect>
-     <x>100</x>
-     <y>30</y>
+     <x>59</x>
+     <y>22</y>
      <w>80</w>
      <h>80</h>
+    </rect>
+    <rect>
+     <x>37</x>
+     <y>55</y>
+     <w>20</w>
+     <h>20</h>
     </rect>
    </bodyRectBox>
    <phyRectBox>
     <rect>
-     <x>5</x>
-     <y>5</y>
+     <x>66</x>
+     <y>30</y>
      <w>40</w>
      <h>80</h>
+    </rect>
+    <rect>
+     <x>41</x>
+     <y>59</y>
+     <w>20</w>
+     <h>20</h>
     </rect>
    </phyRectBox>
   </frame>
