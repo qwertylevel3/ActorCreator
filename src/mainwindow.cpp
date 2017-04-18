@@ -52,8 +52,9 @@ void MainWindow::saveFileSlot()
     animationBox->save(curFile);
 }
 
-void MainWindow::closeFileSlot()
+bool MainWindow::closeFileSlot()
 {
+    bool flag=false;
     if(isModified())
     {
         int choose=QMessageBox::warning(
@@ -66,21 +67,25 @@ void MainWindow::closeFileSlot()
         {
             saveFileSlot();
             closeFile();
+            flag=true;
         }
         else if(choose==QMessageBox::No)
         {
             closeFile();
+            flag=true;
         }
         else if(choose==QMessageBox::Cancel)
         {
-            return;
+            flag=false;
         }
     }
     else
     {
         closeFile();
+        flag=true;
     }
     modified=false;
+    return true;
 }
 
 void MainWindow::changeFrame()
@@ -201,9 +206,64 @@ void MainWindow::addPhyRect()
     updateScene();
 }
 
+void MainWindow::deleteAtkRect()
+{
+    if(!model)
+    {
+        return;
+    }
+
+    QModelIndex curRectIndex=ui->atkRectView->currentIndex();
+
+    QStandardItem* curRect=model->itemFromIndex(curRectIndex);
+    QStandardItem* parent=curRect->parent();
+    parent->removeRow(curRect->row());
+
+    updateScene();
+}
+
+void MainWindow::deleteBodyRect()
+{
+    if(!model)
+    {
+        return;
+    }
+
+    QModelIndex curRectIndex=ui->bodyRectView->currentIndex();
+
+    QStandardItem* curRect=model->itemFromIndex(curRectIndex);
+    QStandardItem* parent=curRect->parent();
+    parent->removeRow(curRect->row());
+
+    updateScene();
+}
+
+void MainWindow::deletePhyRect()
+{
+    if(!model)
+    {
+        return;
+    }
+
+    QModelIndex curRectIndex=ui->phyRectView->currentIndex();
+
+    QStandardItem* curRect=model->itemFromIndex(curRectIndex);
+    QStandardItem* parent=curRect->parent();
+    parent->removeRow(curRect->row());
+
+    updateScene();
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    closeFileSlot();
+    if(closeFileSlot())
+    {
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }
 
 void MainWindow::printAnimationBox()
@@ -238,6 +298,10 @@ void MainWindow::connectActions()
     connect(ui->atkAddButton,SIGNAL(clicked(bool)),this,SLOT(addAtkRect()));
     connect(ui->bodyAddButton,SIGNAL(clicked(bool)),this,SLOT(addBodyRect()));
     connect(ui->phyAddButton,SIGNAL(clicked(bool)),this,SLOT(addPhyRect()));
+
+    connect(ui->atkDeleteButton,SIGNAL(clicked(bool)),this,SLOT(deleteAtkRect()));
+    connect(ui->bodyDeleteButton,SIGNAL(clicked(bool)),this,SLOT(deleteBodyRect()));
+    connect(ui->phyDeleteButton,SIGNAL(clicked(bool)),this,SLOT(deletePhyRect()));
 
 }
 
@@ -306,6 +370,10 @@ void MainWindow::showAtkRect()
         rectobject->setRectColor(QColor(255,0,0));
         scene->addItem(rectobject);
     }
+    if(root->rowCount()>0)
+    {
+        ui->atkRectView->setCurrentIndex(root->child(0)->index());
+    }
 }
 
 void MainWindow::showBodyRect()
@@ -328,6 +396,11 @@ void MainWindow::showBodyRect()
 //        rectobject->setParentItem(pixmapItem);
         scene->addItem(rectobject);
     }
+    if(root->rowCount()>0)
+    {
+        ui->bodyRectView->setCurrentIndex(root->child(0)->index());
+    }
+
 }
 
 void MainWindow::showPhyRect()
@@ -347,6 +420,10 @@ void MainWindow::showPhyRect()
         rectobject->setRectColor(QColor(0,255,0));
         scene->addItem(rectobject);
 
+    }
+    if(root->rowCount()>0)
+    {
+        ui->phyRectView->setCurrentIndex(root->child(0)->index());
     }
 }
 

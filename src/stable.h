@@ -20,6 +20,7 @@
 #include<QTimer>
 #include<QTextStream>
 #include<QMessageBox>
+#include<QKeyEvent>
 
 
 

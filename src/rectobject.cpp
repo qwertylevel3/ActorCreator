@@ -55,22 +55,26 @@ void RectObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void RectObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsRectItem::mouseReleaseEvent(event);
-//    QPointF endPos=event->pos();
-//    endPos=mapToScene(endPos);
-//    QPointF dis=endPos-startPos;
-//    rectPtr->moveBy(dis);
-//    this->setRect(rectPtr->getRect());
 }
 
 void RectObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-//    QGraphicsRectItem::mouseMoveEvent(event);
     QPointF endPos=event->pos();
     endPos=mapToScene(endPos);
     QPointF dis=endPos-startPos;
     startPos=endPos;
     rectPtr->moveBy(dis);
     this->setRect(rectPtr->getRect());
+}
+
+void RectObject::keyPressEvent(QKeyEvent *event)
+{
+//    if(event->key()==Qt::Key_Delete)
+//    {
+//        rectPtr->deleteSelf();
+//    }
+//    this->setParentItem(nullptr);
+//    delete this;
 }
 
 

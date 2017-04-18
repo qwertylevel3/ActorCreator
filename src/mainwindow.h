@@ -18,7 +18,7 @@ public slots:
     void openFileSlot();
     void newFileSlot();
     void saveFileSlot();
-    void closeFileSlot();
+    bool closeFileSlot();
 protected slots:
     void changeFrame();
     void changeAnimation();
@@ -28,6 +28,9 @@ protected slots:
     void addAtkRect();
     void addBodyRect();
     void addPhyRect();
+    void deleteAtkRect();
+    void deleteBodyRect();
+    void deletePhyRect();
 protected:
     void closeEvent(QCloseEvent *event);
 

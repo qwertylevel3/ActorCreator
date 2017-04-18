@@ -60,6 +60,11 @@ void AnimationFrameRect::updateText()
     this->setText(text);
 }
 
+//void AnimationFrameRect::deleteSelf()
+//{
+//    this->parent()->removeRow(this->row());
+//}
+
 void AnimationFrameRect::setRect(QRectF r)
 {
 //    QRectF temp=r;

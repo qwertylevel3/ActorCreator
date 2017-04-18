@@ -23,6 +23,7 @@ public:
     void moveBy(QPointF dis);
 
     void updateText();
+//    void deleteSelf();
 protected:
     QRectF rect;
 };
