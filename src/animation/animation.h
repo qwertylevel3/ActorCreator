@@ -12,6 +12,7 @@ class Animation:public QStandardItem
 public:
     Animation();
     void addFrame(AnimationFrame* f);
+    void addFrame(const QString& picFileName);
     void setID(const QString& i);
     QString getID();
 protected:

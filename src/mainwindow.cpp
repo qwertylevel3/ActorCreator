@@ -88,40 +88,69 @@ bool MainWindow::closeFileSlot()
     return true;
 }
 
-void MainWindow::changeFrame()
+
+void MainWindow::updateRectView()
 {
     if(!model)
     {
         return;
     }
+
     curFrameIndex=ui->frameView->currentIndex();
 
-    QModelIndex atkRootIndex=curFrameIndex.child(0,0);
-    QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
-    QModelIndex phyRootIndex=curFrameIndex.child(2,0);
+    if(curFrameIndex.child(0,0).isValid())
+    {
+        QModelIndex atkRootIndex=curFrameIndex.child(0,0);
+        ui->atkRectView->setModel(model);
+        ui->atkRectView->setRootIndex(atkRootIndex);
+    }
 
-    ui->atkRectView->setRootIndex(atkRootIndex);
-    ui->bodyRectView->setRootIndex(bodyRootIndex);
-    ui->phyRectView->setRootIndex(phyRootIndex);
+    if(curFrameIndex.child(1,0).isValid())
+    {
+        QModelIndex bodyRootIndex=curFrameIndex.child(1,0);
+        ui->bodyRectView->setModel(model);
+        ui->bodyRectView->setRootIndex(bodyRootIndex);
+    }
 
-    scene->clear();
+    if(curFrameIndex.child(2,0).isValid())
+    {
+        QModelIndex phyRootIndex=curFrameIndex.child(2,0);
+        ui->phyRectView->setModel(model);
+        ui->phyRectView->setRootIndex(phyRootIndex);
+    }
 
     updateScene();
 }
 
-void MainWindow::changeAnimation()
+void MainWindow::updateFrameView()
 {
     if(!model)
     {
         return;
     }
+
     curAnimationIndex=ui->animationView->currentIndex();
-    curFrameIndex=curAnimationIndex.child(0,0);
-
+    ui->frameView->setModel(model);
     ui->frameView->setRootIndex(curAnimationIndex);
-    ui->frameView->setCurrentIndex(curAnimationIndex.child(0,0));
 
-    changeFrame();
+    if(curAnimationIndex.child(0,0).isValid())
+    {
+        //当前animation有一个以上的frame
+        curFrameIndex=curAnimationIndex.child(0,0);
+        ui->frameView->setCurrentIndex(curFrameIndex);
+        updateRectView();
+        ui->rectDockWidget->setEnabled(true);
+    }
+    else
+    {
+        //如果当前animation没有frame设置各个view为空
+        ui->rectDockWidget->setEnabled(false);
+        ui->atkRectView->setModel(nullptr);
+        ui->bodyRectView->setModel(nullptr);
+        ui->phyRectView->setModel(nullptr);
+        ui->frameView->setModel(nullptr);
+    }
+
 }
 
 void MainWindow::updateScene()
@@ -148,7 +177,7 @@ void MainWindow::changeRectTab(int index)
 
 void MainWindow::addAtkRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -169,7 +198,7 @@ void MainWindow::addAtkRect()
 
 void MainWindow::addBodyRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -189,7 +218,7 @@ void MainWindow::addBodyRect()
 
 void MainWindow::addPhyRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -208,7 +237,7 @@ void MainWindow::addPhyRect()
 
 void MainWindow::deleteAtkRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -224,7 +253,7 @@ void MainWindow::deleteAtkRect()
 
 void MainWindow::deleteBodyRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -240,7 +269,7 @@ void MainWindow::deleteBodyRect()
 
 void MainWindow::deletePhyRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -254,6 +283,31 @@ void MainWindow::deletePhyRect()
     updateScene();
 }
 
+void MainWindow::addFrame()
+{
+    QString picFile=QFileDialog::getOpenFileName(this,
+                                         tr("Open png file"),".",
+                                         tr("png file(*.png)"));
+
+    if(picFile.isEmpty())
+    {
+        return;
+    }
+    Animation* animation=static_cast<Animation*>(model->itemFromIndex(curAnimationIndex));
+    animation->addFrame(picFile);
+
+    updateFrameView();
+}
+
+void MainWindow::deleteFrame()
+{
+    scene->clear();
+    QStandardItem* frame=model->itemFromIndex(curFrameIndex);
+    frame->parent()->removeRow(frame->row());
+
+    updateFrameView();
+}
+
 void MainWindow::selectRectObject(QModelIndex index)
 {
     QList<QGraphicsItem*> allItem=scene->items();
@@ -265,6 +319,15 @@ void MainWindow::selectRectObject(QModelIndex index)
 
     AnimationFrameRect* rect=static_cast<AnimationFrameRect*>(model->itemFromIndex(index));
     rect->selectObject();
+}
+
+void MainWindow::setViewToModel()
+{
+    ui->atkRectView->setModel(model);
+    ui->bodyRectView->setModel(model);
+    ui->phyRectView->setModel(model);
+    ui->frameView->setModel(model);
+    ui->animationView->setModel(model);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -303,8 +366,8 @@ void MainWindow::connectActions()
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFileSlot()));
     connect(ui->actionClose,SIGNAL(triggered(bool)),this,SLOT(closeFileSlot()));
 
-    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeAnimation()));
-    connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(changeFrame()));
+    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(updateFrameView()));
+    connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(updateRectView()));
 
     connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(changeRectTab(int)));
 
@@ -320,6 +383,9 @@ void MainWindow::connectActions()
     connect(ui->bodyRectView,SIGNAL(clicked(QModelIndex)),this,SLOT(selectRectObject(QModelIndex)));
     connect(ui->phyRectView,SIGNAL(clicked(QModelIndex)),this,SLOT(selectRectObject(QModelIndex)));
 
+    connect(ui->frameAddButton,SIGNAL(clicked(bool)),this,SLOT(addFrame()));
+    connect(ui->frameDeleteButton,SIGNAL(clicked(bool)),this,SLOT(deleteFrame()));
+
 }
 
 void MainWindow::open(const QString &filename)
@@ -328,11 +394,8 @@ void MainWindow::open(const QString &filename)
     animationBox=new AnimationBox;
     model->appendRow(animationBox);
 
-    ui->atkRectView->setModel(model);
-    ui->bodyRectView->setModel(model);
-    ui->phyRectView->setModel(model);
-    ui->frameView->setModel(model);
-    ui->animationView->setModel(model);
+
+    setViewToModel();
 
     if(!filename.isEmpty()
                     && animationBox->init(filename))
@@ -340,7 +403,7 @@ void MainWindow::open(const QString &filename)
         curAnimationIndex=animationBox->child(0)->index();
         ui->animationView->setRootIndex(animationBox->index());
         ui->animationView->setCurrentIndex(curAnimationIndex);
-        changeAnimation();
+        updateFrameView();
     }
 }
 
@@ -372,7 +435,7 @@ void MainWindow::showRect()
 
 void MainWindow::showAtkRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -396,7 +459,7 @@ void MainWindow::showAtkRect()
 
 void MainWindow::showBodyRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -424,7 +487,7 @@ void MainWindow::showBodyRect()
 
 void MainWindow::showPhyRect()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }
@@ -449,7 +512,7 @@ void MainWindow::showPhyRect()
 
 void MainWindow::showSprite()
 {
-    if(!model)
+    if(!model  )
     {
         return;
     }

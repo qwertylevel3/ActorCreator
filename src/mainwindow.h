@@ -20,8 +20,8 @@ public slots:
     void saveFileSlot();
     bool closeFileSlot();
 protected slots:
-    void changeFrame();
-    void changeAnimation();
+    void updateRectView();
+    void updateFrameView();
     void updateScene();
     void changeRectTab(int index);
 
@@ -32,8 +32,13 @@ protected slots:
     void deleteBodyRect();
     void deletePhyRect();
 
+    //TODO
+    void addFrame();
+    void deleteFrame();
+
     void selectRectObject(QModelIndex index);
 protected:
+    void setViewToModel();
     void closeEvent(QCloseEvent *event);
 
     //debug
