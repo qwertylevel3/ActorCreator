@@ -24,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setScene(scene);
     view->setAcceptDrops(true);
 
+    ui->animationDockWidget->setEnabled(false);
+    ui->frameDockWidget->setEnabled(false);
+    ui->rectDockWidget->setEnabled(false);
+
 }
 
 MainWindow::~MainWindow()
@@ -44,12 +48,29 @@ void MainWindow::openFileSlot()
 
 void MainWindow::newFileSlot()
 {
-    std::cout<<"new"<<std::endl;
+    //TODO
+    model=new QStandardItemModel();
+    animationBox=new AnimationBox;
+    model->appendRow(animationBox);
+
+    updateAnimationView();
 }
 
 void MainWindow::saveFileSlot()
 {
-    animationBox->save(curFile);
+    if(!curFile.isEmpty())
+    {
+        animationBox->save(curFile);
+    }
+    else
+    {
+        curFile=QFileDialog::getSaveFileName(
+                                this,
+                                tr("save animation file"),".",
+                                tr("animation file(*.xml)")
+                                );
+        animationBox->save(curFile);
+    }
 }
 
 bool MainWindow::closeFileSlot()
@@ -161,6 +182,9 @@ void MainWindow::updateAnimationView()
     }
     scene->clear();
 
+    ui->animationDockWidget->setEnabled(true);
+    ui->animationView->setModel(model);
+    ui->animationView->setRootIndex(animationBox->index());
     curAnimationIndex=ui->animationView->currentIndex();
 
     if(curAnimationIndex.isValid())
@@ -463,7 +487,7 @@ void MainWindow::open(const QString &filename)
         curAnimationIndex=animationBox->child(0)->index();
         ui->animationView->setRootIndex(animationBox->index());
         ui->animationView->setCurrentIndex(curAnimationIndex);
-        updateFrameView();
+        updateAnimationView();
     }
 }
 
