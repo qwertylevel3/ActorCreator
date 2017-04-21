@@ -153,6 +153,33 @@ void MainWindow::updateFrameView()
 
 }
 
+void MainWindow::updateAnimationView()
+{
+    if(!model)
+    {
+        return;
+    }
+    scene->clear();
+
+    curAnimationIndex=ui->animationView->currentIndex();
+
+    if(curAnimationIndex.isValid())
+    {
+        //当前animatoinBox不为空
+        ui->frameDockWidget->setEnabled(true);
+        updateFrameView();
+    }
+    else
+    {
+        ui->rectDockWidget->setEnabled(false);
+        ui->frameDockWidget->setEnabled(false);
+        ui->atkRectView->setModel(nullptr);
+        ui->bodyRectView->setModel(nullptr);
+        ui->phyRectView->setModel(nullptr);
+        ui->frameView->setModel(nullptr);
+    }
+}
+
 void MainWindow::updateScene()
 {
     scene->clear();
@@ -308,6 +335,37 @@ void MainWindow::deleteFrame()
     updateFrameView();
 }
 
+void MainWindow::addAnimation()
+{
+    bool ok=false;
+    QString animationID=QInputDialog::getText(
+                this,
+                tr("animation ID"),
+                tr("input animation ID"),
+                 QLineEdit::Normal, QString::null, &ok);
+    if(ok && !animationID.isEmpty())
+    {
+        Animation* newAnimation=new Animation();
+        newAnimation->setID(animationID);
+        animationBox->addAnimation(newAnimation);
+        ui->animationView->setCurrentIndex(newAnimation->index());
+        updateAnimationView();
+    }
+}
+
+void MainWindow::deleteAnimation()
+{
+    QModelIndex curAnimationIndex=ui->animationView->currentIndex();
+
+    //防止为当前animationBox为空
+    if(curAnimationIndex.isValid())
+    {
+        QStandardItem* curAnimation=model->itemFromIndex(curAnimationIndex);
+        curAnimation->parent()->removeRow(curAnimation->row());
+    }
+    updateAnimationView();
+}
+
 void MainWindow::selectRectObject(QModelIndex index)
 {
     QList<QGraphicsItem*> allItem=scene->items();
@@ -366,7 +424,7 @@ void MainWindow::connectActions()
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(saveFileSlot()));
     connect(ui->actionClose,SIGNAL(triggered(bool)),this,SLOT(closeFileSlot()));
 
-    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(updateFrameView()));
+    connect(ui->animationView,SIGNAL(clicked(QModelIndex)),this,SLOT(updateAnimationView()));
     connect(ui->frameView,SIGNAL(clicked(QModelIndex)),this,SLOT(updateRectView()));
 
     connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(changeRectTab(int)));
@@ -386,6 +444,8 @@ void MainWindow::connectActions()
     connect(ui->frameAddButton,SIGNAL(clicked(bool)),this,SLOT(addFrame()));
     connect(ui->frameDeleteButton,SIGNAL(clicked(bool)),this,SLOT(deleteFrame()));
 
+    connect(ui->animationAddButton,SIGNAL(clicked(bool)),this,SLOT(addAnimation()));
+    connect(ui->animationDeleteButton,SIGNAL(clicked(bool)),this,SLOT(deleteAnimation()));
 }
 
 void MainWindow::open(const QString &filename)

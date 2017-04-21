@@ -22,6 +22,7 @@ public slots:
 protected slots:
     void updateRectView();
     void updateFrameView();
+    void updateAnimationView();
     void updateScene();
     void changeRectTab(int index);
 
@@ -32,9 +33,13 @@ protected slots:
     void deleteBodyRect();
     void deletePhyRect();
 
-    //TODO
     void addFrame();
     void deleteFrame();
+
+    void addAnimation();
+    void deleteAnimation();
+
+
 
     void selectRectObject(QModelIndex index);
 protected:

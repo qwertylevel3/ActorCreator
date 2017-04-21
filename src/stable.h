@@ -21,6 +21,7 @@
 #include<QTextStream>
 #include<QMessageBox>
 #include<QKeyEvent>
+#include<QInputDialog>
 
 
 
