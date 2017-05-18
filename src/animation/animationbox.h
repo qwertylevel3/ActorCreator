@@ -19,6 +19,9 @@ protected:
 
     void saveAnimation(QDomDocument& doc,QDomElement& node,Animation* animation);
     void saveRect(QDomDocument& doc,QDomElement& node,AnimationFrameRect* animationFrameRect);
+
+    QString curFile;
+    QString resourceDir;
 };
 
 #endif // ANIMATIONBOX_H

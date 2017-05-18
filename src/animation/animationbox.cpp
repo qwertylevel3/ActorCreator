@@ -14,6 +14,11 @@ bool AnimationBox::init(const QString &fileName)
         std::cerr<<fileName.toStdString()<<" can not open"<<std::endl;
         return false;
     }
+
+    curFile=fileName;
+    resourceDir=curFile.left(curFile.lastIndexOf('/'))+"/resource/";
+
+
     this->setText(fileName);
 
     QDomDocument doc;
@@ -121,6 +126,7 @@ void AnimationBox::initAnimationFrame(AnimationFrame* frame,QDomElement& element
     //sprite
     QDomElement attrElement=element.firstChildElement();
     QString spriteFrame=attrElement.text();
+    spriteFrame=resourceDir+spriteFrame;
     frame->setSprite(spriteFrame);
 
     //delayUnits
@@ -207,7 +213,11 @@ void AnimationBox::saveAnimation(QDomDocument& doc,QDomElement &node, Animation 
 
         QDomElement spriteFrameElement=doc.createElement("spriteFrame");
         frameElement.appendChild(spriteFrameElement);
-        QDomText spriteFrameText=doc.createTextNode(animationFrame->getSpriteName());
+        //只写入png文件名,不写入路径
+        QString picPath=animationFrame->getSpriteName();
+        int index=picPath.lastIndexOf("/");
+        picPath=picPath.mid(index+1);
+        QDomText spriteFrameText=doc.createTextNode(picPath);
         spriteFrameElement.appendChild(spriteFrameText);
 
         QDomElement delayUnitsElement=doc.createElement("delayUnits");

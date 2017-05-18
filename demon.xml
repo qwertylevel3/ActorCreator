@@ -1,0 +1,20 @@
+<animationBox>
+ <animation>
+  <ID>demon_test</ID>
+  <frame>
+   <spriteFrame>demon_test.png</spriteFrame>
+   <delayUnits>1</delayUnits>
+   <atkRectBox/>
+   <bodyRectBox>
+    <rect>
+     <x>51</x>
+     <y>19</y>
+     <w>32</w>
+     <h>72</h>
+    </rect>
+   </bodyRectBox>
+   <phyRectBox/>
+  </frame>
+ </animation>
+</animationBox>
+
