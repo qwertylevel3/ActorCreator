@@ -32,9 +32,9 @@ void AnimationFrame::addPhyRect(AnimationFrameRect *rect)
     this->child(PHYRECT)->appendRow(rect);
 }
 
-void AnimationFrame::setSprite(const QString &s)
+void AnimationFrame::setSpriteName(const QString &s)
 {
-    sprite=s;
+    spriteName=s;
     //this->setText(sprite);
 //    this->setEditable(false);
 
@@ -51,11 +51,21 @@ void AnimationFrame::setDelayUnits(float d)
 
 QString AnimationFrame::getSpriteName()
 {
-    return sprite;
+    return spriteName;
 }
 
 float AnimationFrame::getDelayUnits()
 {
     return delayUnits;
+}
+
+QString AnimationFrame::getSpritePath()
+{
+    return spritePath;
+}
+
+void AnimationFrame::setSpritePath(const QString &path)
+{
+    spritePath=path;
 }
 

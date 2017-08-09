@@ -125,9 +125,15 @@ void AnimationBox::initAnimationFrame(AnimationFrame* frame,QDomElement& element
 {
     //sprite
     QDomElement attrElement=element.firstChildElement();
-    QString spriteFrame=attrElement.text();
-    spriteFrame=resourceDir+spriteFrame;
-    frame->setSprite(spriteFrame);
+    QString spriteName=attrElement.text();
+    spriteName=resourceDir+spriteName;
+    frame->setSpriteName(spriteName);
+
+    //path
+//    attrElement=attrElement.nextSiblingElement();
+//    QString spritePath=attrElement.text();
+//    spritePath=resourceDir+spritePath;
+//    frame->setSpritePath(spritePath);
 
     //delayUnits
     attrElement=attrElement.nextSiblingElement();

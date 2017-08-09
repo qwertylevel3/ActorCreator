@@ -14,7 +14,7 @@ void Animation::addFrame(AnimationFrame *f)
 void Animation::addFrame(const QString &picFileName)
 {
     AnimationFrame* frame=new AnimationFrame();
-    frame->setSprite(picFileName);
+    frame->setSpriteName(picFileName);
     frame->setDelayUnits(1);
 
     addFrame(frame);

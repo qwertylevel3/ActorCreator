@@ -1,0 +1,20 @@
+<animationBox>
+ <animation>
+  <ID>jj</ID>
+  <frame>
+   <spriteFrame>demon_test.png</spriteFrame>
+   <delayUnits>1</delayUnits>
+   <atkRectBox/>
+   <bodyRectBox/>
+   <phyRectBox/>
+  </frame>
+  <frame>
+   <spriteFrame>stella_atk0.png</spriteFrame>
+   <delayUnits>1</delayUnits>
+   <atkRectBox/>
+   <bodyRectBox/>
+   <phyRectBox/>
+  </frame>
+ </animation>
+</animationBox>
+

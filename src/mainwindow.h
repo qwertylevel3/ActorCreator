@@ -26,6 +26,7 @@ protected slots:
     void updateScene();
     void changeRectTab(int index);
 
+    //rect
     void addAtkRect();
     void addBodyRect();
     void addPhyRect();
@@ -33,31 +34,33 @@ protected slots:
     void deleteBodyRect();
     void deletePhyRect();
 
+    //frame
     void addFrame();
     void deleteFrame();
 
+    //animation
     void addAnimation();
     void deleteAnimation();
 
-
-
     void selectRectObject(QModelIndex index);
 protected:
+    void connectActions();
+
     void setViewToModel();
     void closeEvent(QCloseEvent *event);
 
     //debug
     void printAnimationBox();
 
-    void connectActions();
-
     void open(const QString& filename);
     void closeFile();
 
+    //在graphicsScene中根据当前标签显示rect
     void showRect();
     void showAtkRect();
     void showBodyRect();
     void showPhyRect();
+
     void showSprite();
 
     bool isModified();

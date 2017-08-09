@@ -5,8 +5,8 @@
 
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+        QMainWindow(parent),
+        ui(new Ui::MainWindow)
 {
     modified=false;
 
@@ -336,16 +336,21 @@ void MainWindow::deletePhyRect()
 
 void MainWindow::addFrame()
 {
-    QString picFile=QFileDialog::getOpenFileName(this,
-                                         tr("Open png file"),".",
-                                         tr("png file(*.png)"));
+    QStringList picFiles=QFileDialog::getOpenFileNames(this,
+                                                       tr("Open png file"),".",
+                                                       tr("png file(*.png)"));
 
-    if(picFile.isEmpty())
+    if(picFiles.isEmpty())
     {
         return;
     }
-    Animation* animation=static_cast<Animation*>(model->itemFromIndex(curAnimationIndex));
-    animation->addFrame(picFile);
+
+    for(int i=0;i<picFiles.size();i++)
+    {
+        Animation* animation=static_cast<Animation*>(model->itemFromIndex(curAnimationIndex));
+        animation->addFrame(picFiles.at(i));
+    }
+
 
     updateFrameView();
 }
@@ -363,10 +368,10 @@ void MainWindow::addAnimation()
 {
     bool ok=false;
     QString animationID=QInputDialog::getText(
-                this,
-                tr("animation ID"),
-                tr("input animation ID"),
-                 QLineEdit::Normal, QString::null, &ok);
+                            this,
+                            tr("animation ID"),
+                            tr("input animation ID"),
+                            QLineEdit::Normal, QString::null, &ok);
     if(ok && !animationID.isEmpty())
     {
         Animation* newAnimation=new Animation();
@@ -414,12 +419,15 @@ void MainWindow::setViewToModel()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+
     if(closeFileSlot())
     {
+        //如果成功关闭或保存文件，则关闭窗口
         event->accept();
     }
     else
     {
+        //选择cancle，忽视关闭窗口事件
         event->ignore();
     }
 }
@@ -600,7 +608,9 @@ void MainWindow::showSprite()
     {
         return;
     }
-    QString spriteName=static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))->getSpriteName();
+    QString spriteName=
+                    static_cast<AnimationFrame*>(model->itemFromIndex(curFrameIndex))
+                    ->getSpriteName();
     pixmapItem=new QGraphicsPixmapItem(QPixmap(spriteName));
     pixmapItem->setPos(pixmapItem->pos().x(),-pixmapItem->boundingRect().height());
     scene->addItem(pixmapItem);
